@@ -1,3 +1,5 @@
+#Python script for serving the RoboBuoy control page
+
 # import functions from libraries so we can use them
 #   - 'flask' lets our python script act like a webserver
 #     we don't need everything so just import a few things from flask
