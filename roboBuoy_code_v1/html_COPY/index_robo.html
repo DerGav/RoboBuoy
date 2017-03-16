@@ -1,0 +1,45 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Robo Buoy Status and Control</title>
+  </head>
+  <body>
+    <div class="main_page">
+      <div class="buoy_data">
+	Hi.  I'm RoboBuoy.  Things are going fine.
+	<table>
+	<tr><th>Item</th><th>Value</th></tr>
+	<tr><td>Battery</td><td>78%</td></tr>
+	<tr><td>Target Name</td><td>Carmel River Canyon</td></tr>
+	<tr><td>Target Location</td><td>Zone 10S, 594558.27, 4044094.50</td></tr>
+	<tr><td>Current Location</td><td>Zone 10S, 594561.27, 4044098.50</td></tr>
+	<tr><td>Current Heading</td><td>230 degrees</td></tr>
+	<tr><td>Move needed</td><td>5 m at 233 degrees</td></tr>
+	<tr><td>Thrust</td><td>80% forward</td></tr>
+	<tr><td>Turning</td><td>2% starboard</td></tr>
+	<tr><td>Magnetic declination</td><td>+13.3 East</td></tr>
+	</table>
+	Note: UTM values are Easting, Northing.
+      </div>
+      <div class="buoy_data">
+	<br><br>
+	You can send me instructions:<br>
+	<form>
+	<select name="targets">
+	  <option value="1" selected="selected">Carmel River Canyon</option>
+	  <option value="2">CSUMB Pool, Lane 6</option>
+	  <option value="3">Great Pacific Gyre</option>
+	</select>
+	&nbsp;&nbsp;
+	<input value="Send new Location" id="newloc" name="NewLoc" type="submit">
+	<br><br>
+	<input value="Stop!" id="stopcommand" name="StopCommand" type="submit">
+	<br><br>
+	<input value="Home is where your GPS is" id="sethome" name="SetHome" type="submit">
+	</form>
+    </div>
+  </body>
+</html>
+

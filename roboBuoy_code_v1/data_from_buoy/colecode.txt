@@ -1,0 +1,6 @@
+<td>Turn Direction</td> <td>-- </td> 
+<td>Speed</td> <td>Going fast (6939.9 m away) </td>
+<td>Distance to Target</td> <td>6939.9 m</td>
+<td>Current Lat/Lon</td> <td>36.652682, -121.794222 </td>
+<td>Target Lat/Lon</td> <td>36.62388, -121.90735 </td>
+<td>Satellites in use </td> <td>9&nbsp;&nbsp; (position error 0.0 m)</td>

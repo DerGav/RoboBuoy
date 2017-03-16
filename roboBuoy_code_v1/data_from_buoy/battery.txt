@@ -1,0 +1,2 @@
+<td>Pi Battery</td> <td>Not monitored</td> 
+<td>Motor Battery</td> <td>'14.644134540557861' </td> 

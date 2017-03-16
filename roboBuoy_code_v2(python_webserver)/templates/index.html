@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!-- HTML file for RoboBuoy web user interface -------------------------------->
+<!-- Defines the basic layout of the user interface web page------------------->
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RoboBuoy Control Page</title>
+
+<!-- DEV NOTICE: replace "url_for()" if not served from main python script----->
+
+<!-- load JQUERY MOBILE framework---------------------------------------------->
+<!-- like a library, essentially a bunch of ready to use javascript and css,
+     to make the page look pretty --------------------------------------------->
+  <link rel="stylesheet"
+  href="{{ url_for('static', filename='jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css')}}"/>
+  <script type="text/javascript" src="{{
+          url_for('static', filename='jquery-2.2.4.min.js') }}"></script>
+  <script type="text/javascript"
+  src="{{ url_for('static', filename='jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js')}}">
+  </script>
+
+<!-- link CUSTOM CSS file------------------------------------------------------>
+<!-- CSS definition: https://www.w3schools.com/css/ -->
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename='roboBuoy_styles.css') }}">
+
+<!-- tell browser where to ask for data from ---------------------------------->
+  <script type="text/javascript">
+    /*
+    use following line if this html file is being served from the same
+    python script, from which we get the data (probably motor_contorl.py)
+    */
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+    /*
+    Use the following commented line instead, if this file is being served from
+    elsewhere (e.g. Apache Webserver, like in the first version of RoboBuoy),
+    to set $SCRIPT_ROOT to the RoboBuoys IP address
+    */
+    //$SCRIPT_ROOT = 'http://192.168.43.1:5000'
+  </script>
+
+<!-- link CUSTOM JS file ------------------------------------------------------>
+<!-- tell the browser to execute the code in 'roboBuoy.js' file --------------->
+  <script type="text/javascript" src="{{
+          url_for('static', filename='roboBuoy.js') }}"></script>
+</head>
+<body>
+  <!-- javascript for getting data from python script -->
+  <!-- <script type="text/javascript">
+    $(function () { // run as soon as document is loaded
+      setInterval( // call follwing function in a set interval of milliseconds
+        function()
+        {
+          $.getJSON($SCRIPT_ROOT + '/some_value', // get data from this URL
+                    //  and execute this function when data arrives
+                    function(data)
+                    {
+                      $('#values').empty(); //remove the data from previous call
+                      for( var key in data) //add new data pairs to html table
+                      {  //create new row in table
+                        $('<tr></tr>').append($('<th></th>').html(key))
+                                      .append($('<td></td>').html(data[key]))
+                                      .appendTo('#values'); //add row to table
+                      }
+                    });
+        },250); //interval in milliseconds after which to get new data from roboBuoy
+    });
+  </script> -->
+
+<div data-role="page" id="pageone">
+  <div class="section" id="controls">
+    <div data-role="header">
+      <h1>Controls</h1>
+    </div>
+    <div data-role="main" class="ui-content">
+      <!-- <button class="ui-btn center-button">START</button>
+      <button class="ui-btn center-button">STOP</button> -->
+      <form>
+        <label for="flip-2">RoboBuoy: </label>
+        <select name="flip-2" id="flip-2" data-role="flipswitch" data-theme="b">
+            <option value="off">Off</option>
+            <option value="on">On</option>
+        </select>
+      </form>
+      <form>
+        <div class="ui-field-contain">
+            <label for="select-native-4">Choose Target Location:</label>
+            <select name="select-native-4" id="select-native-4">
+                <option>Choose...</option>
+                <optgroup label="Group 1">
+                    <option value="1">The 1st Option</option>
+                    <option value="2">The 2nd Option</option>
+                    <option value="3">The 3rd Option</option>
+                    <option value="4">The 4th Option</option>
+                </optgroup>
+                <optgroup label="Group 2">
+                    <option value="5">The 5th Option</option>
+                    <option value="6">The 6th Option</option>
+                    <option value="7">The 7th Option</option>
+                </optgroup>
+            </select>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="section"  id="data">
+    <div data-role="header">
+      <h1>Data</h1>
+    </div>
+    <div data-role="main" class="ui-content">
+      <table id="values"></table>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
