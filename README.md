@@ -25,4 +25,3 @@ v2 is not ready to be used on RoboBuoy yet. It can however be run on a computer 
 3. run **roboBuoy_python_webserver_test.py** using python 
 4. open a browser at http://127.0.0.1:5000 to view the control page
    * If you want to view the control page on a different device (e.g. smartphone, tablet) open a browser there and go to http://<your_computers_ip_adress>:5000.
-  
