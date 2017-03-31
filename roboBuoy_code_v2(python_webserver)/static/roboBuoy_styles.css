@@ -29,3 +29,30 @@ select[data-role="flipswitch"]
   border: 2px solid lightgrey;
   border-radius: 5px;
 }
+
+/*- make FLIPSWITCH big ------------------------------------------------------*/
+#flipswitchWrapper .ui-flipswitch {
+
+    width:400px;
+    height:100px;
+    line-height: 100px;
+}
+#flipswitchWrapper .ui-flipswitch-active {
+    padding-left:0px;
+}
+#flipswitchWrapper .ui-flipswitch .ui-flipswitch-on,
+#flipswitchWrapper .ui-flipswitch.ui-flipswitch-active .ui-flipswitch-on {
+    width:98px;
+    height:98px;
+    text-indent: -20em;
+}
+#flipswitchWrapper .ui-flipswitch.ui-flipswitch-active .ui-flipswitch-on {
+    padding-top:0px;
+    margin-left:300px;
+    text-indent: -18em;
+    line-height: inherit;
+}
+
+#flipswitchWrapper .ui-flipswitch-off {
+    line-height: inherit;
+}

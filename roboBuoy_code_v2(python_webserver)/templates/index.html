@@ -48,27 +48,6 @@
           url_for('static', filename='roboBuoy.js') }}"></script>
 </head>
 <body>
-  <!-- javascript for getting data from python script -->
-  <!-- <script type="text/javascript">
-    $(function () { // run as soon as document is loaded
-      setInterval( // call follwing function in a set interval of milliseconds
-        function()
-        {
-          $.getJSON($SCRIPT_ROOT + '/some_value', // get data from this URL
-                    //  and execute this function when data arrives
-                    function(data)
-                    {
-                      $('#values').empty(); //remove the data from previous call
-                      for( var key in data) //add new data pairs to html table
-                      {  //create new row in table
-                        $('<tr></tr>').append($('<th></th>').html(key))
-                                      .append($('<td></td>').html(data[key]))
-                                      .appendTo('#values'); //add row to table
-                      }
-                    });
-        },250); //interval in milliseconds after which to get new data from roboBuoy
-    });
-  </script> -->
 
 <div data-role="page" id="pageone">
   <div class="section" id="controls">
@@ -78,13 +57,15 @@
     <div data-role="main" class="ui-content">
       <!-- <button class="ui-btn center-button">START</button>
       <button class="ui-btn center-button">STOP</button> -->
-      <form>
-        <label for="flip-2">RoboBuoy: </label>
-        <select name="flip-2" id="flip-2" data-role="flipswitch" data-theme="b">
-            <option value="off">Off</option>
-            <option value="on">On</option>
-        </select>
+      <form id="switch">
+        <div id="flipswitchWrapper">
+          <select id="stopStart" data-role="flipswitch" name="startStopSwitch">
+              <option>Stopped</option>
+              <option>Running</option>
+          </select>
+        </div>
       </form>
+
       <form>
         <div class="ui-field-contain">
             <label for="select-native-4">Choose Target Location:</label>
