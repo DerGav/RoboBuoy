@@ -59,7 +59,7 @@ $(document).ready(function () { // execute as soon as page (=document) is loaded
 function sendCommandToRoboBuoy(command)
 {
   $.ajax({
-            url: $SCRIPT_ROOT + '/receiveCommand',
+            url: $SCRIPT_ROOT + '/receive_command',
 
             //$('#switch') gets 'form' element which contains the on/off switch
             //the serialize functions translates it so python can understand it

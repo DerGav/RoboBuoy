@@ -6,7 +6,7 @@
 from flask import Flask,render_template,jsonify, request
 
 # import our target destination management file to get the destinations
-# 'as' keyword allows us to give it a shorter (arbitrary) name 
+# 'as' keyword allows us to give it a shorter (arbitrary) name
 import roboBuoy_targetDestination_management as targets
 
 # initialize Flask webapp
@@ -50,7 +50,7 @@ def add_numbers():
 
 # this route doesn't serve a page or data but instead
 # receives data from the browser, hence methods=['POST']
-@app.route('/receiveCommand', methods=['POST'])
+@app.route('/receive_command', methods=['POST'])
 def receiveCommand():
     # for now lets store the received data in a global variable
     global received_data
