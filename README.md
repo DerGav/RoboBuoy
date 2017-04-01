@@ -11,6 +11,7 @@ This is a work in progress attempt of redesigning and simplifying the code.
 
 * **roboBuoy_python_webserver_test.py** currently contains only the code to run a flask webserver on roboBuoys Raspberry Pi
 In future this file could be merged with roboBuoys main motor control script, to eliminate the need of the motor control    script communicating with the server and instead have it serving the control page or at least the data to be displayed directly
+* **roboBuoy_targetDestination_management.py** is meant to handle the permanent storage of roboBuoy's target destinations. For now it's just a skeleton. In future it should read and write target destinations to a file or database.
 * the **templates** directory contains html templates to be rendered by the python webserver
   * **index.html** defines the basic layout of the main control page viewed on the tablet. It also loads and runs the 'roboBuoy.js' file on the client
 * the **static** directory contains javascript and css files 
