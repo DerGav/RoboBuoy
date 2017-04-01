@@ -4,6 +4,7 @@
 #   - 'flask' lets our python script act like a webserver
 #     we don't need everything so just import a few things from flask
 from flask import Flask,render_template,jsonify, request
+import roboBuoy_targetDestination_management as targets
 
 # initialize Flask webapp
 app = Flask(__name__)
@@ -68,7 +69,13 @@ def show_received():
     global received_data
     return jsonify(received_data)
 
-# this is pythons way of saying:"start the code execution here" ('main' function)
+@app.route('/send_targetDestinations')
+def send_targetDestinations():
+    return jsonify(targets.get_target_destinations())
+
+
+
+# this is pythons way of saying:"start code execution here" ('main' function)
 # detailed explanation:
 #   http://ibiblio.org/g2swap/byteofpython/read/module-name.html
 if __name__ == '__main__':
@@ -79,4 +86,5 @@ if __name__ == '__main__':
     #  "host='0.0.0.0'" :
     #       runs the server on the pi's IP-Adress and so makes it
     #       available to anyone in the same network
-    app.run(debug=True, host='0.0.0.0')
+    # app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True)
