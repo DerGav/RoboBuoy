@@ -76,8 +76,6 @@ def show_received():
 def send_targetDestinations():
     return jsonify(targets.get_target_destinations())
 
-
-
 # this is pythons way of saying:"start code execution here" ('main' function)
 # detailed explanation:
 #   http://ibiblio.org/g2swap/byteofpython/read/module-name.html

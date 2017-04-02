@@ -66,7 +66,7 @@
         </div>
       </form>
 
-      <form>
+      <form id="select_target_destination">
         <div class="ui-field-contain">
             <label for="targets">Choose Target Location:</label>
             <select name="select-native-4" id="targets">
@@ -75,6 +75,10 @@
             </select>
         </div>
       </form>
+
+      <a href="#editTargets"
+         class="ui-shadow ui-btn ui-corner-all ui-btn-inline"
+         data-transition="pop"> Edit Targets... </a>
     </div>
   </div>
 
@@ -85,6 +89,30 @@
     <div data-role="main" class="ui-content">
       <table id="values"></table>
     </div>
+  </div>
+</div>
+
+
+<!-- Edit Target Destinations Dialog ------------------------------------------>
+<!-- the following html defines the destination editing page ------------------>
+<!-- it only appears when the Edit button is clicked -->
+<div data-role="page" data-dialog="true" id="editTargets">
+  <div data-role="header">
+    <h1>Edit Target Destinations</h1>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <!-- this 'collapsibleset' contains all groups which again contains target destinations, -->
+    <div data-role="collapsible-set" data-theme="a" data-content-theme="b"
+         id="edit_targets_list">
+      <!-- The target destinations will be added here by the javascript -->
+    </div>
+  </div>
+
+  <!-- button for adding new groups -->
+  <button class="ui-btn ui-btn-inline" id="createGroup">Create New Group</button>
+  <div data-role="footer">
+    <h1>Footer Text In Dialog</h1>
   </div>
 </div>
 
