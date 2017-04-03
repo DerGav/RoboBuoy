@@ -49,6 +49,29 @@ $(document).ready(function () { // execute as soon as page (=document) is loaded
     get_received_data();
   });
 
+  $('#cancel_add_target').on('click', function() {
+    //reset form fields to defaults
+    $('#new_target_form')[0].reset();
+  });
+
+  $('input:radio[name=new_or_existing_group]').on('change', function () {
+    console.log($(this).val());
+    if($(this).val() === 'existing_group')
+    {
+      $('#new_group_name').textinput('disable');
+      $('#select_group').selectmenu('enable')
+                        .focus();
+
+    }
+    else {
+      $('#select_group').selectmenu('disable');
+      $('#new_group_name').textinput('enable')
+                          .focus();
+    }
+  });
+
+  $('#save_new_target').on('click', updateTargets);
+
   // react to a 'change' of the target selector
   // and send new location to roboBuoy
   $('#targets').on('change', function () {
@@ -168,6 +191,10 @@ function add_targetDestinations(targets)
         $select_group.appendTo('#targets');
         $list_group_container.append($list_group);
         $list_group_container.appendTo('#edit_targets_list');
+
+        $('#select_group').append(
+          $('<option></option>').html(targets[i].group_name)
+        );
   }
   // log array to verify everything went right
   console.log(target_destinations);
@@ -184,4 +211,65 @@ function get_received_data()
               // just log data to console so we can see it
               console.log(data);
             });
+}
+
+function updateTargets()
+{
+  //read values from form
+  var name  = $('#location_name').val();
+  var lat   = $('#location_lat' ).val();
+  var long  = $('#location_long').val();
+
+  var group;
+  var existing_group = $('input:radio[name=new_or_existing_group]:checked').val();
+  if(existing_group === 'existing_group')
+  {
+    existing_group = true;
+  } else {
+    existing_group = false;
+  }
+  if(existing_group)
+  {
+    console.log('here');
+    group = $('#select_group').val();
+
+    if(group === 'Choose Group...')
+    {
+      console.log('No Group Selected!');
+    }
+  }
+  else {
+    group = $('#new_group_name').val();
+  }
+
+  //console.log(name,lat,long,group,existing_group);
+
+  // check if values were entered
+  if(name && lat && long && group)
+  {
+    var $targets = $('#targets');
+    if(existing_group)
+    {
+      $.each($targets.find('optgroup'), function () {
+        if ($(this).attr('label') === group)
+        {
+          $(this).append(
+            $('<option></option>').html(name)
+          );
+        }
+      });
+    }
+    else {
+      $targets.append(
+        $('<optgroup></optgroup>').attr('label', group)
+                                  .append(
+                                    $('<option></option>').html(name)
+                                  )
+      );
+    }
+  }
+
+  //reset all form fields to defaults
+  $('#new_target_form')[0].reset();
+
 }

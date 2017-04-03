@@ -79,6 +79,10 @@
       <a href="#editTargets"
          class="ui-shadow ui-btn ui-corner-all ui-btn-inline"
          data-transition="pop"> Edit Targets... </a>
+
+      <a href="#addTarget"
+            class="ui-shadow ui-btn ui-corner-all ui-btn-inline"
+            data-transition="pop" data-rel="dialog"> Add Targets... </a>
     </div>
   </div>
 
@@ -111,6 +115,57 @@
 
   <!-- button for adding new groups -->
   <button class="ui-btn ui-btn-inline" id="createGroup">Create New Group</button>
+  <div data-role="footer">
+    <h1>Footer Text In Dialog</h1>
+  </div>
+</div>
+
+<!-- Add Target Destination Dialog ------------------------------------------>
+<!-- the following html defines the destination editing page ------------------>
+<!-- it only appears when the Add Target button is clicked -->
+<div data-role="page" data-dialog="true" id="addTarget">
+  <div data-role="header">
+    <h1>Add Target Destination</h1>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <form id="new_target_form">
+        <label for="location_name">location name</label>
+        <input type="text" name="location_name"
+               id="location_name" data-clear-btn="true">
+
+        <label for="location_lat">latitude</label>
+        <input type="number" step="any" name="location_lat"
+               id="location_lat" data-clear-btn="true">
+
+        <label for="location_long">longitude</label>
+        <input type="number" step="any" name="location_long"
+               id="location_long" data-clear-btn="true">
+      <fieldset data-role="controlgroup">
+        <legend>Select Group:</legend>
+          <label for="existing_group">Add to existing group</label>
+          <input type="radio" name="new_or_existing_group"
+                 id="existing_group" value="existing_group" checked="checked">
+
+              <select name="select_group" id="select_group">
+                <option>Choose Group...</option>
+              </select>
+
+          <label for="new_group">Create New</label>
+          <input type="radio" name="new_or_existing_group"
+                 id="new_group" value="new_group">
+
+          <label for="new_group_name">group name</label>
+          <input type="text" name="new_group_name"
+                 id="new_group_name" data-clear-btn="true">
+      </fieldset>
+    </form>
+    <a href="#pageone" data-rel="back "
+       class="ui-btn ui-btn-inline" id="save_new_target"> Save </button>
+    <a href="#pageone" data-rel="back "class="ui-btn ui-btn-inline"
+       id="cancel_add_target"> Cancel </a>
+  </div>
+
   <div data-role="footer">
     <h1>Footer Text In Dialog</h1>
   </div>
