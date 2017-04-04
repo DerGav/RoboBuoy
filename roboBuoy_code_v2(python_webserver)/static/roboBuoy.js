@@ -5,26 +5,32 @@
 var target_destinations = [];
 var target_destinations_with_groups = {};
 
-$(document).ready(function () { // execute as soon as page (=document) is loaded
+////////////////////////////////////////////////////////////////////////////////
+// Execute as soon as page (=document) is loaded
+////////////////////////////////////////////////////////////////////////////////
+$(document).ready(function () {
 
+////////////////////////////////////////////////////////////////////////////////
+  // Load data from server
+////////////////////////////////////////////////////////////////////////////////
   $.getJSON($SCRIPT_ROOT + '/send_targetDestinations', // get data from this URL
-            //  and execute this function when data arrives
-            function(data) //data is now the response from the server
+            // and execute this function when data arrives
+            function(data) // data is now the response from the server
             {
               console.log(data);
               add_targetDestinations(data);
             });
 
-  //call function passed as first parameter over and over again
-  //in a set interval of milliseconds
+  // call function passed as first parameter over and over again
+  // in a set interval of milliseconds
   setInterval( function()
   {
     $.getJSON($SCRIPT_ROOT + '/some_value', // get data from this URL
-              //  and execute this function when data arrives
-              function(data) //data is now the response from the server
+              // and execute this function when data arrives
+              function(data) // data is now the response from the server
               {
-                //console.log(data)
-                $('#values').empty(); //remove the data from previous call
+                // console.log(data)
+                $('#values').empty(); // remove the data from previous call
 
                 /*
                  * loop through all data pairs and add them to the table
@@ -37,9 +43,14 @@ $(document).ready(function () { // execute as soon as page (=document) is loaded
                                 .appendTo('#values'); //add row to table
                 }
               });
-  },250); //interval in milliseconds after which to get new data from roboBuoy
+  },250); // interval in milliseconds after which to get new data from roboBuoy
 
-  //react to a 'change' of the switch and send according command to roboBuoy
+////////////////////////////////////////////////////////////////////////////////
+  // Setup 'Eventhandlers'
+  // ==> determine what happens when user clicks buttons/interacts with page
+////////////////////////////////////////////////////////////////////////////////
+
+  // react to a 'change' of the switch and send according command to roboBuoy
   $('#stopStart').on('change', function (){
     sendCommandToRoboBuoy({
       'motors': $(this).val()
@@ -50,29 +61,6 @@ $(document).ready(function () { // execute as soon as page (=document) is loaded
     get_received_data();
   });
 
-  $('#cancel_add_target').on('click', function() {
-    //reset form fields to defaults
-    $('#new_target_form')[0].reset();
-  });
-
-  $('input:radio[name=new_or_existing_group]').on('change', function () {
-    console.log($(this).val());
-    if($(this).val() === 'existing_group')
-    {
-      $('#new_group_name').textinput('disable');
-      $('#select_group').selectmenu('enable')
-                        .focus();
-
-    }
-    else {
-      $('#select_group').selectmenu('disable');
-      $('#new_group_name').textinput('enable')
-                          .focus();
-    }
-  });
-
-  $('#save_new_target').on('click', updateTargets);
-
   // react to a 'change' of the target selector
   // and send new location to roboBuoy
   $('#targets').on('change', function () {
@@ -81,6 +69,72 @@ $(document).ready(function () { // execute as soon as page (=document) is loaded
     });
     get_received_data();
   });
+
+  //////////////////////////////////////////////////////////////////////////////
+  // setup the 'Add Target...' Dialog
+  //////////////////////////////////////////////////////////////////////////////
+
+  // following code block ensures that the new_group_name textinput will be
+  // disabled when the add target dialog is opened
+  $( "#new_group_name" ).textinput({
+    // call this function when the textinput is created/initialized by jQuery
+    create: function( event, ui ) {
+      // give tag an arbitrary attribute to tell us that it has been initialized
+      $(this).attr('data-initialized','true');
+    }
+  });
+  $( "#select_group" ).selectmenu({
+    // call this function when the textinput is created/initialized by jQuery
+    create: function( event, ui ) {
+      // give tag an arbitrary attribute to tell us that it has been initialized
+      $(this).attr('data-initialized','true');
+    }
+  });
+  // call function whenever the add target dialog is opened
+  $("a[href='#addTarget']").on('click', function () {
+    // pre load the group name textinput
+    var $new_group_name = $('#new_group_name');
+    var $select_group   = $('#select_group');
+    // check if textinput has been initialized
+    if( $new_group_name.attr('data-initialized') &&
+        $select_group.attr('data-initialized')       )
+    {
+      // if so disable it and enable the group selectmenu
+      $new_group_name.textinput('disable');
+      $('#select_group').selectmenu('enable');
+    }
+  });
+
+  // reset the form when cancel button is clicked
+  $('#cancel_add_target').on('click', function() {
+    //reset form fields to defaults
+    $('#new_target_form')[0].reset();
+  });
+
+  // enable/disable the group select and name input depending on user selection
+  $('input:radio[name=new_or_existing_group]').on('change', function () {
+    //console.log($(this).val());
+    // if add to existing group is selected..
+    if($(this).val() === 'existing_group')
+    {
+      //disable textinput and enable select
+      $('#new_group_name').textinput('disable');
+      $('#select_group').selectmenu('enable')
+                        .focus(); // puts cursor here
+    }
+    else {
+      $('#select_group').selectmenu('disable');
+      $('#new_group_name').textinput('enable')
+                          .focus(); // puts cursor in the textinput field
+    }
+  });
+
+  // call updateTargets when the save button is clicked
+  $('#save_new_target').on('click', updateTargets);
+
+  //////////////////////////////////////////////////////////////////////////////
+  // setup the 'Edit Targets...' Dialog
+  //////////////////////////////////////////////////////////////////////////////
 
   //create a new target group if the button is clicked
   $('#createGroup').on('click', function (){
@@ -114,8 +168,11 @@ $(document).ready(function () { // execute as soon as page (=document) is loaded
          }
     });
   });
-
 });
+
+////////////////////////////////////////////////////////////////////////////////
+// define Functions
+////////////////////////////////////////////////////////////////////////////////
 
 //send commands to roboBuoy using AJAX
 //use 'receiveCommand' end point of roboBuoys webserver
@@ -194,6 +251,7 @@ function add_targetDestinations(targets)
         $list_group_container.append($list_group);
         $list_group_container.appendTo('#edit_targets_list');
 
+        // add the group to the dropdown in the add target dialog
         $('#select_group').append(
           $('<option></option>').html(targets[i].group_name)
         );
@@ -349,11 +407,19 @@ function updateTargets()
 
       // add the new target to the quick acces array
       target_destinations.push(new_target);
+
+      // add the new group to the dropdown in this dialog
+      $('#select_group').append(
+        $('<option></option>').html(group)
+      );
+
+
     }
   }
 
-  console.log(target_destinations);
-  console.log(target_destinations_with_groups);
+  // log our arrays to see if everything worked
+  //console.log(target_destinations);
+  //console.log(target_destinations_with_groups);
 
   // reset all form fields to defaults
   $('#new_target_form')[0].reset();
