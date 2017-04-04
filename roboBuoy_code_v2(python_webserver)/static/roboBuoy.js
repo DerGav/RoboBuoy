@@ -171,11 +171,12 @@ $(document).ready(function () {
 });
 
 ////////////////////////////////////////////////////////////////////////////////
-// define Functions
+// Functions
 ////////////////////////////////////////////////////////////////////////////////
 
-//send commands to roboBuoy using AJAX
-//use 'receiveCommand' end point of roboBuoys webserver
+// send 'command' to roboBuoy using AJAX
+// using 'receiveCommand' end point of roboBuoys webserver
+// for list of commands and their format, refer to documentation
 function sendCommandToRoboBuoy(command)
 {
   $.ajax({
@@ -198,18 +199,18 @@ function sendCommandToRoboBuoy(command)
         });
 }
 
-//adds the targets passed in 'targets' array to the webpage's UI
-//also stores the targets array in a global variable for easy access
+// adds the targets passed in 'targets' array to the webpage's UI
+// also stores the targets array in a global variable for easy access
 function add_targetDestinations(targets)
 {
-  //store index that coordinates will have in target_destinations array
+  // store index that coordinates will have in target_destinations array
   var target_destinations_index = 0;
   target_destinations_with_groups = targets;
 
-  //loop through the targets array
+  // loop through the targets array
   for (var i=0; i < targets.length; i++)
   {
-        //create an html tag for the group and give it a name
+        // create an html tag for the group and give it a name
         var $select_group = $('<optgroup></optgroup>').attr('label',targets[i].group_name);
         var $list_group = $('<ul data-role="listview" data-filter="true" data-filter-theme="a" data-divider-theme="b"></ul>');
         var $list_group_container = $('<div></div>')
@@ -218,7 +219,7 @@ function add_targetDestinations(targets)
                                           $('<h2></h2>').html(targets[i].group_name)
                                         );
 
-        //loop through the coordinate objects of a group of targets
+        // loop through the coordinate objects of a group of targets
         for(var j=0; j < targets[i].coordinates.length; j++)
         {
           //append a new option to the select group
@@ -236,7 +237,8 @@ function add_targetDestinations(targets)
 
           );
           $list_group.append(
-            $('<li></li>').append($('<a></a>')).html(targets[i].coordinates[j].target_name)
+            $('<li></li>').append($('<a></a>'))
+                          .html(targets[i].coordinates[j].target_name)
           );
 
           //add the coordinate object to global array
