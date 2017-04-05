@@ -3,7 +3,7 @@
 
 import threading # this allows us to create and run threads
 # import our webserver file so we can run the server from here
-import roboBuoy_python_webserver_test
+import roboBuoy_webserver
 
 # get the Flask app from our webserver file and store it in a variable
 app = roboBuoy_python_webserver_test.app
