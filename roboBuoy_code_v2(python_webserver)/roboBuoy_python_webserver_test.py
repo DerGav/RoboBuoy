@@ -1,4 +1,4 @@
-# Python script for serving the RoboBuoy control page
+# this file contains all the code to define roboBuoy's webserver's behavior
 
 # import functions from libraries so we can use them
 #   - 'flask' lets our python script act like a webserver
@@ -12,9 +12,10 @@ import roboBuoy_targetDestination_management as targets
 # initialize Flask webapp
 app = Flask(__name__)
 
-# define global variable used for testing
+# define global variables used for testing during development
 i = 0
 received_data = []
+
 # for a request to the root directory of our webpage call the index() function
 @app.route('/')
 # define a function (fka Subroutine) called index
@@ -75,17 +76,3 @@ def show_received():
 @app.route('/send_targetDestinations')
 def send_targetDestinations():
     return jsonify(targets.get_target_destinations())
-
-# this is pythons way of saying:"start code execution here" ('main' function)
-# detailed explanation:
-#   http://ibiblio.org/g2swap/byteofpython/read/module-name.html
-if __name__ == '__main__':
-
-    # run the flask webapp we initialized at the top
-    #  "debug=True" :
-    #       run in debug mode (a bit slower, but easier to troubleshoot)
-    #  "host='0.0.0.0'" :
-    #       runs the server on the pi's IP-Adress and so makes it
-    #       available to anyone in the same network
-    # app.run(debug=True, host='0.0.0.0')
-    app.run(debug=True)
