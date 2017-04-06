@@ -6,7 +6,7 @@ import threading # this allows us to create and run threads
 import roboBuoy_webserver
 
 # get the Flask app from our webserver file and store it in a variable
-app = roboBuoy_python_webserver_test.app
+app = roboBuoy_webserver.app
 
 # this function simply runs the server
 def runServer():
@@ -21,6 +21,7 @@ def runServer():
     #       available to anyone in the same network
     app.run(debug=True, use_reloader=False, host='0.0.0.0')
     # app.run(debug=True)
+    # app.run(debug=False, host='0.0.0.0')
 
 # this function should contain roboBuoy control code in future
 def roboBuoyControl():
