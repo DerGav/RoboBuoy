@@ -1,6 +1,42 @@
+import Adafruit_LSM303
+
+# Magnetometer corrections
+# 13.3 is a good declination for Marina, CA in 2016.  Change when traveling.
+declination = 13.3
+
+# Diagnostics to see the range of mx, mz values
+# When a new magnetometer is installed, diagnostics should be turned on and
+# then robobuoy should be turned  and rotated in all directions (including upside
+# down) until new min/max values are not found (logging of those lines will stop).
+# Then the values must be copied into the MX_MIN and other values in the next
+# section.
+COLLECT_MAG_CALIBRATION_RANGE = False
+mag_x_min =  1000
+mag_y_min =  1000
+mag_z_min =  1000
+mag_x_max = -1000
+mag_y_max = -1000
+mag_z_max = -1000
+
+# The ranges from the diagnostics are recorded here, and used to scale mx, my, mz
+# to both center and scale the ranges.
+# Note that the ".0" after each value is not a significant figure, but it may
+# help ensure that later code does floating point math rather than integer rounding.
+MX_MIN = -443.0
+MX_MAX =  636.0
+MY_MIN = -649.0
+MY_MAX =  370.0
+MZ_MIN = -669.0
+MZ_MAX =  447.0
+
+# The magnetometer!
+lsm = Adafruit_LSM303.LSM303()
+#logger.info("Magnetometer started.")
+#print ("Magnetometer started.")
+
 def collectMagCalibration(mag):
 	global mag_x_min, mag_x_max, mag_y_min, mag_y_max, mag_z_min, mag_z_max
-	logMax = False
+	#logMax = False
 	if mx < mag_x_min:
 		mag_x_min = mx
 		logMax = True
@@ -19,16 +55,16 @@ def collectMagCalibration(mag):
 	if mz > mag_z_max:
 		mag_z_max = mz
 		logMax = True
-	if logMax:
-		logger.debug("raw mx,y,z ranges " + str(mag_x_min) + " " + str(mag_x_max)
-					   + "  " + str(mag_y_min) + " " + str(mag_y_max)
-					   + "  " + str(mag_z_min) + " " + str(mag_z_max))
+	# if logMax:
+	# 	logger.debug("raw mx,y,z ranges " + str(mag_x_min) + " " + str(mag_x_max)
+	# 				   + "  " + str(mag_y_min) + " " + str(mag_y_max)
+	# 				   + "  " + str(mag_z_min) + " " + str(mag_z_max))
 
-# Use the magnetometer to compute magnetic heading and then return
-# true heading in degrees between 0 and 360.
+	# Use the magnetometer to compute magnetic heading and then return
+	# true heading in degrees between 0 and 360.
 def getTrueHeadingTiltComp(lsm):
 	global MX_MIN, MX_MAX, MY_MIN, MY_MAX, MZ_MIN, MZ_MAX
-	global logNow
+	#global logNow
 	# Read from the sensor and pull out values.
 	accel, mag = lsm.read()
 
@@ -105,39 +141,7 @@ def getTrueHeadingTiltComp(lsm):
 	return heading
 
 
-def setupMagnetometer():
-    # Magnetometer corrections
-    # 13.3 is a good declination for Marina, CA in 2016.  Change when traveling.
-    declination = 13.3
-
-    # Diagnostics to see the range of mx, mz values
-    # When a new magnetometer is installed, diagnostics should be turned on and
-    # then robobuoy should be turned  and rotated in all directions (including upside
-    # down) until new min/max values are not found (logging of those lines will stop).
-    # Then the values must be copied into the MX_MIN and other values in the next
-    # section.
-    COLLECT_MAG_CALIBRATION_RANGE = False
-    mag_x_min =  1000
-    mag_y_min =  1000
-    mag_z_min =  1000
-    mag_x_max = -1000
-    mag_y_max = -1000
-    mag_z_max = -1000
-
-    # The ranges from the diagnostics are recorded here, and used to scale mx, my, mz
-    # to both center and scale the ranges.
-    # Note that the ".0" after each value is not a significant figure, but it may
-    # help ensure that later code does floating point math rather than integer rounding.
-    MX_MIN = -443.0
-    MX_MAX =  636.0
-    MY_MIN = -649.0
-    MY_MAX =  370.0
-    MZ_MIN = -669.0
-    MZ_MAX =  447.0
-
-    # The magnetometer!
-    lsm = Adafruit_LSM303.LSM303()
-    logger.info("Magnetometer started.")
 
 def read():
-    	mag_heading = getTrueHeadingTiltComp(lsm) #current heading - in degrees
+	mag_heading = getTrueHeadingTiltComp(lsm) #current heading - in degrees
+	print(mag_heading)

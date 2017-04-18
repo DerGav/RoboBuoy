@@ -2,6 +2,8 @@
 import RPi.GPIO as GPIO
 import time
 
+
+
 checkPi = False
 debug = True
 
@@ -27,6 +29,7 @@ maxWait = 1000
 
 # Be sure this does not interfere with other GPIO usage.  Set and reset??
 GPIO.setmode(GPIO.BCM)
+
 
 # Define function to measure charge time
 # The key parts which wait for the interupt are based on code
@@ -96,91 +99,94 @@ def voltageCheck(pin, slope, intercept):
     print(repr(chargeCount) + "ms gives V = " + repr(voltage))
     return voltage
 
+if __name__ == '__main__':
+    print(CapacitorChargeTime(PiBatteryPin))
 
 #
-#  Check Raspberry Pi battery voltage
+# #
+# #  Check Raspberry Pi battery voltage
+# #
+# # Note that motorBatProblem serves a dual uses.  When false it means that no
+# # problem has been detected yet.  Once a motor battery tests below the danger
+# # level, the message will be stored here and it won't get updated until restart.
+# # The variable will test logical True, so we can use it to skip voltage
+# # checks.
+# motorBatProblem = False
+# pVoltage = 0.0
+# mVoltage = 0.0
+# msg1 = ""
+# msg2 = ""
+# while 1:
+#     # Get voltages
+#     if checkPi:
+#       pVoltage = voltageCheck(PiBatteryPin, piSlope, piIntercept)
+#     # If the motor battery is already marked dead don't check again.
+#     if not motorBatProblem:
+#       mVoltage = voltageCheck(MotorBatteryPin, motorSlope, motorIntercept)
+#     if debug:
+#       print("  Pi Voltage:    " + repr(pVoltage))
+#       print("  Motor Voltage: " + repr(mVoltage))
 #
-# Note that motorBatProblem serves a dual uses.  When false it means that no
-# problem has been detected yet.  Once a motor battery tests below the danger
-# level, the message will be stored here and it won't get updated until restart.
-# The variable will test logical True, so we can use it to skip voltage
-# checks.
-motorBatProblem = False
-pVoltage = 0.0
-mVoltage = 0.0
-msg1 = ""
-msg2 = ""
-while 1:
-    # Get voltages
-    if checkPi:
-      pVoltage = voltageCheck(PiBatteryPin, piSlope, piIntercept)
-    # If the motor battery is already marked dead don't check again.
-    if not motorBatProblem:
-      mVoltage = voltageCheck(MotorBatteryPin, motorSlope, motorIntercept)
-    if debug:
-      print("  Pi Voltage:    " + repr(pVoltage))
-      print("  Motor Voltage: " + repr(mVoltage))
-
-    # Check for actions.  Handle emergency conditions first, as
-    # we may not even need the rest of the code in those cases.
-    # Then do the rest so the browser gets an update and values
-    # are available to any other code which wants to look.
-    if checkPi:
-      if pVoltage < piBatDanger:
-        # Double check before drastic action
-        # If voltage is actually okay, we'll carry on with the new value.
-        # This assumes that a fraction of a second for checking won't be a disaster.
-        pVoltage = voltageCheck(PiBatteryPin, piSlope, piIntercept)
-        print("Pi retry voltage: " + repr(pVoltage) + "\n") 
-        if pVoltage < piBatDanger:
-          ToRoboBuoy("EMERGENCY RoboBuoy STOP.  Pi voltage is " + repr(pVoltage),
-  		   repr(mVoltage))
-          ToBrowser("EMERGENCY RoboBuoy STOP. " + repr(pVoltage),
-                     repr(mVoltage))
-          # We'll be shutting down the Pi.  Might as well quit.
-          if debug: print(" send low Pi battery emergency stop")
-          quit()
-
-    # Similar code for the motor battery, but we'll shut down just the
-    # motors and not the Raspberry Pi.
-    if not motorBatProblem and (mVoltage < motorBatDanger):
-      # Double check before drastic action
-      # If voltage is actually okay, we'll carry on with the new value.
-      # This assumes that our low battery voltage isn't so finely set 
-      # that a fraction of a second for checking will be a disaster.
-      mVoltage = voltageCheck(MotorBatteryPin, motorSlope, motorIntercept)
-      if mVoltage < motorBatDanger:
-        motorBatProblem = "EMERGENCY MOTOR STOP.  Motor voltage is " + repr(mVoltage)
-        ToRoboBuoy(repr(pVoltage), motorBatProblem)
-        ToBrowser(repr(pVoltage), motorBatProblem)
-        if debug: print(" send low Motor battery emergency stop")
-
-    # In non-emergency conditions we just set msg1 for the Pi and msg2
-    # for the motor battery and send them off to the web server.  The
-    # controller code just gets the numerical values.
-    # control code.
-    if checkPi:
-      if  pVoltage < piBatLow:
-        if debug: print(" send low Pi battery warning")
-        msg1 = "Low: " + repr(pVoltage)
-      else:
-        if debug: print(" Sending updated Pi voltage to browser")
-        msg1 = repr(pVoltage)
-
-    # Similar for motor battery, but no new voltage if it's dead.
-    if motorBatProblem:
-      msg2 = motorBatProblem
-    elif mVoltage < motorBatLow:
-      if debug: print(" send low motor battery warning")
-      msg2 = "Low: " + repr(mVoltage)
-    else:
-      if debug: print(" Sending updated motor voltage to browser")
-      msg2 = repr(mVoltage)
-   
-    # Update what the browser displays and what the controller gets.
-    ToBrowser(msg1, msg2)
-    if motorBatProblem:
-      ToRoboBuoy(repr(pVoltage), motorBatProblem)
-    else:
-      ToRoboBuoy(repr(pVoltage), repr(mVoltage))
-    time.sleep(2)
+#     # Check for actions.  Handle emergency conditions first, as
+#     # we may not even need the rest of the code in those cases.
+#     # Then do the rest so the browser gets an update and values
+#     # are available to any other code which wants to look.
+#     if checkPi:
+#       if pVoltage < piBatDanger:
+#         # Double check before drastic action
+#         # If voltage is actually okay, we'll carry on with the new value.
+#         # This assumes that a fraction of a second for checking won't be a disaster.
+#         pVoltage = voltageCheck(PiBatteryPin, piSlope, piIntercept)
+#         print("Pi retry voltage: " + repr(pVoltage) + "\n")
+#         if pVoltage < piBatDanger:
+#           ToRoboBuoy("EMERGENCY RoboBuoy STOP.  Pi voltage is " + repr(pVoltage),
+#   		   repr(mVoltage))
+#           ToBrowser("EMERGENCY RoboBuoy STOP. " + repr(pVoltage),
+#                      repr(mVoltage))
+#           # We'll be shutting down the Pi.  Might as well quit.
+#           if debug: print(" send low Pi battery emergency stop")
+#           quit()
+#
+#     # Similar code for the motor battery, but we'll shut down just the
+#     # motors and not the Raspberry Pi.
+#     if not motorBatProblem and (mVoltage < motorBatDanger):
+#       # Double check before drastic action
+#       # If voltage is actually okay, we'll carry on with the new value.
+#       # This assumes that our low battery voltage isn't so finely set
+#       # that a fraction of a second for checking will be a disaster.
+#       mVoltage = voltageCheck(MotorBatteryPin, motorSlope, motorIntercept)
+#       if mVoltage < motorBatDanger:
+#         motorBatProblem = "EMERGENCY MOTOR STOP.  Motor voltage is " + repr(mVoltage)
+#         ToRoboBuoy(repr(pVoltage), motorBatProblem)
+#         ToBrowser(repr(pVoltage), motorBatProblem)
+#         if debug: print(" send low Motor battery emergency stop")
+#
+#     # In non-emergency conditions we just set msg1 for the Pi and msg2
+#     # for the motor battery and send them off to the web server.  The
+#     # controller code just gets the numerical values.
+#     # control code.
+#     if checkPi:
+#       if  pVoltage < piBatLow:
+#         if debug: print(" send low Pi battery warning")
+#         msg1 = "Low: " + repr(pVoltage)
+#       else:
+#         if debug: print(" Sending updated Pi voltage to browser")
+#         msg1 = repr(pVoltage)
+#
+#     # Similar for motor battery, but no new voltage if it's dead.
+#     if motorBatProblem:
+#       msg2 = motorBatProblem
+#     elif mVoltage < motorBatLow:
+#       if debug: print(" send low motor battery warning")
+#       msg2 = "Low: " + repr(mVoltage)
+#     else:
+#       if debug: print(" Sending updated motor voltage to browser")
+#       msg2 = repr(mVoltage)
+#
+#     # Update what the browser displays and what the controller gets.
+#     ToBrowser(msg1, msg2)
+#     if motorBatProblem:
+#       ToRoboBuoy(repr(pVoltage), motorBatProblem)
+#     else:
+#       ToRoboBuoy(repr(pVoltage), repr(mVoltage))
+#     time.sleep(2)
