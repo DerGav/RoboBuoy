@@ -4,9 +4,12 @@
 import threading # this allows us to create and run threads
 # import our webserver file so we can run the server from here
 import roboBuoy_webserver
+from roboBuoy_control import RoboBuoy
 
 # get the Flask app from our webserver file and store it in a variable
 app = roboBuoy_webserver.app
+
+roboBuoy = RoboBuoy()
 
 # this function simply runs the server
 def runServer():
@@ -25,10 +28,10 @@ def runServer():
 
 # this function should contain roboBuoy control code in future
 def roboBuoyControl():
-    # this is a placeholder for the roboBuoy control code
-    # just print sth to the console so we now that this thread is running
-    while True:
-        print('doing stuff...')
+
+    #while True:
+    #    print('doing stuff...')
+	pass
 
 # create array to hold threads
 threads = []
@@ -38,37 +41,37 @@ threads = []
 #   http://ibiblio.org/g2swap/byteofpython/read/module-name.html
 if __name__ == '__main__':
 
-    # we want the webserver and the roboBuoy control code to run concurrently
-    # if you have parts of code that should be executed at the same time
-    # instead of writing 2 seperate programs you can write 1 program with
-    # multiple 'threads'
-    # that way it is a lot easier for those threads to share information
-    # but they still run (pseudo) concurrently
-    # we will start a 'thread' for the webserver
-    # and another for the roboBuoy control code
+	# we want the webserver and the roboBuoy control code to run concurrently
+	# if you have parts of code that should be executed at the same time
+	# instead of writing 2 seperate programs you can write 1 program with
+	# multiple 'threads'
+	# that way it is a lot easier for those threads to share information
+	# but they still run (pseudo) concurrently
+	# we will start a 'thread' for the webserver
+	# and another for the roboBuoy control code
 
-    # connect the server function to a thread
-    t = threading.Thread(target=runServer)
-    # append it to the array
-    threads.append(t)
-    # and start the thread
-    t.start()
+	# connect the server function to a thread
+	t = threading.Thread(target=runServer)
+	# append it to the array
+	threads.append(t)
+	# and start the thread
+	t.start()
 
-    # connect the roboBuoy function to a thread
-    t = threading.Thread(target=roboBuoyControl)
-    # append it to the array
-    threads.append(t)
-    # and start the thread
-    t.start()
+	# connect the roboBuoy function to a thread
+	t = threading.Thread(target=roboBuoyControl)
+	# append it to the array
+	threads.append(t)
+	# and start the thread
+	t.start()
 
-    # Uncomment following code instead of the threads if you just want to
-    # run a single thread with the server. That may be easier for development.
+	# Uncomment following code instead of the threads if you just want to
+	# run a single thread with the server. That may be easier for development.
 
-    # run the flask webapp we initialized at the top
-    #  "debug=True" :
-    #       run in debug mode (a bit slower, but easier to troubleshoot)
-    #  "host='0.0.0.0'" :
-    #       runs the server on the pi's IP-Adress and so makes it
-    #       available to anyone in the same network
-    # app.run(debug=True, host='0.0.0.0')
-    # app.run(debug=True)
+	# run the flask webapp we initialized at the top
+	#  "debug=True" :
+	#       run in debug mode (a bit slower, but easier to troubleshoot)
+	#  "host='0.0.0.0'" :
+	#       runs the server on the pi's IP-Adress and so makes it
+	#       available to anyone in the same network
+	# app.run(debug=True, host='0.0.0.0')
+	# app.run(debug=True)

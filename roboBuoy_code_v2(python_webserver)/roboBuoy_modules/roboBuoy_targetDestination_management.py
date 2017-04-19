@@ -45,4 +45,7 @@ def get_target_destinations():
 
 # TODO: function that takes list of targets and writes it to file or database
 #        for permanent storage
-# TODO: function to read targets from that file or database 
+
+# TODO: function to read targets from that file or database
+def load_target_destinations():
+    print("load_target_destinations") 

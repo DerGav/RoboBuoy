@@ -1,5 +1,11 @@
+import threading
+
+# import gps library somehow
+# from gps import *
+
 class GpsController(threading.Thread):
 	def __init__(self):
+		print("here")
 		threading.Thread.__init__(self)
 		self.gpsd = gps(mode=WATCH_ENABLE) #starting the stream of info
 		self.running = False
@@ -42,15 +48,15 @@ def setupGPS():
     logger.info("GPS controller started.")
 
 def read():
-    current_lat = gpsc.fix.latitude
+	current_lat = gpsc.fix.latitude
 	current_long = gpsc.fix.longitude
 	sats_used = str(gpsc.satellitesUsed)
 
-    if logNow:
-		logger.debug("Long error (m): " + str(gpsc.fix.epx))
-		logger.debug("Lat  error (m): " + str(gpsc.fix.epy))
-		recentEpxy = math.sqrt(gpsc.fix.epx*gpsc.fix.epx + gpsc.fix.epy*gpsc.fix.epy)
-		logger.debug("Satellites used: " + sats_used + " position error " + str(round(recentEpxy, 1)))
+    # if logNow:
+	# 	logger.debug("Long error (m): " + str(gpsc.fix.epx))
+	# 	logger.debug("Lat  error (m): " + str(gpsc.fix.epy))
+	# 	recentEpxy = math.sqrt(gpsc.fix.epx*gpsc.fix.epx + gpsc.fix.epy*gpsc.fix.epy)
+	# 	logger.debug("Satellites used: " + sats_used + " position error " + str(round(recentEpxy, 1)))
 
 def getDistanceToTarget():
 	latMid = (current_lat + target_lat) / 2.0  # calc the midpoint of latitude
@@ -63,7 +69,7 @@ def getDistanceToTarget():
 	if logNow:
 		logger.info("Distance to target = " + str(distance_to_target))
 
-def getDegreesBearingToTarget:
+def getDegreesBearingToTarget():
     # Bearing - 0 deg = N, 90 deg = E, 180 = S, 270 = W
 
 	# Thinking out loud for the inputs to atan2:

@@ -1,7 +1,9 @@
+import RPIO
+
 def setup():
     RPIO.setup(4, RPIO.IN) #pin 4 will be an I/O input pin - leak detection circuit
 
-def checkForLeak()
+def checkForLeak():
 	leak_input = RPIO.input(4)
 	if leak_input == False:
 		#shuts down the thrusters and sends leak alert to contol pad

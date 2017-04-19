@@ -4,7 +4,6 @@
 #   - 'flask' lets our python script act like a webserver
 #     we don't need everything so just import a few things from flask
 from flask import Flask,render_template,jsonify, request
-
 # import our target destination management file to get the destinations
 # 'as' keyword allows us to give it a shorter (arbitrary) name
 import roboBuoy_targetDestination_management as targets
@@ -53,16 +52,19 @@ def add_numbers():
 # receives data from the browser, hence methods=['POST']
 @app.route('/receive_command', methods=['POST'])
 def receiveCommand():
-    # for now lets store the received data in a global variable
-    global received_data
+	# for now lets store the received data in a global variable
+	global received_data
 
-    # the request object contains the data the browser sent to the server
-    # because we took it from a form object it is stored at request.form
-    received_data = request.form
+	# the request object contains the data the browser sent to the server
+	# because we took it from a form object it is stored at request.form
+	received_data = request.form
 
-    # send a message to the browser saying that everything went ok
-    # TODO: maybe some sort of validation of the data should be added here
-    return jsonify({'status':'OK'})
+	# TODO: Call the handle command function
+	roboBuoy.handleCommand(received_data)
+
+	# send a message to the browser saying that everything went ok
+	# TODO: maybe some sort of validation of the data should be added here
+	return jsonify({'status':'OK'})
 
 # this route is just there for development purposes right now
 # it simply sends the data the server received back to the browser Because
