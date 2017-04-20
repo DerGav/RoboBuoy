@@ -4,6 +4,7 @@
 #   - 'flask' lets our python script act like a webserver
 #     we don't need everything so just import a few things from flask
 from flask import Flask,render_template,jsonify, request
+
 # import our target destination management file to get the destinations
 # 'as' keyword allows us to give it a shorter (arbitrary) name
 import roboBuoy_targetDestination_management as targets
@@ -60,7 +61,8 @@ def receiveCommand():
 	received_data = request.form
 
 	# TODO: Call the handle command function
-	roboBuoy.handleCommand(received_data)
+	# sth like following line.. get access to roboBuoy from roboBuoy.py file...
+	#roboBuoy.roboBuoy.handleCommand(received_data)
 
 	# send a message to the browser saying that everything went ok
 	# TODO: maybe some sort of validation of the data should be added here

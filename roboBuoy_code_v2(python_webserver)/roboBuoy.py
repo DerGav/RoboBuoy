@@ -29,9 +29,9 @@ def runServer():
 # this function should contain roboBuoy control code in future
 def roboBuoyControl():
 
-    #while True:
-    #    print('doing stuff...')
-	pass
+    while True:
+       print('doing stuff...')
+
 
 # create array to hold threads
 threads = []
@@ -52,9 +52,18 @@ if __name__ == '__main__':
 
 	# connect the server function to a thread
 	t = threading.Thread(target=runServer)
-	# append it to the array
+
+	# make this thread a 'daemon'
+	# this essentially means that it will be automatically stopped once the
+	# main roboBuoy thread is exited
+	# NOTE: this may not be desirable in production, but is useful during
+	# development, as it allows the whole program to be started and stopped from
+	# the terminal
+	t.setDaemon(True)
+
+	# append thread to the array
 	threads.append(t)
-	# and start the thread
+	# and start it
 	t.start()
 
 	# connect the roboBuoy function to a thread
