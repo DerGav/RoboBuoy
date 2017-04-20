@@ -15,7 +15,7 @@ This is a work in progress attempt of redesigning and simplifying the code.
 * **roboBuoy.py** is the code file that should be executed to run this new roboBuoy control software. It doesn't do that much itself, but it executes code from the other files, serving as a sort of 'commandcentral'
 * **roboBuoy_webserver.py** currently contains the code to run a flask webserver on roboBuoys Raspberry Pi
 * **roboBuoy_control.py** should in future be the main script to read from the sensors, calculate the distance and control roboBuoy's thrusters. To do so it should execute code from the files located in the **roboBuoy_modules** folder
-* **roboBuoy_modules** contains some files, which each contain the code to 'operate' one of roboBuoy's components. The code is splitted out into several files in an attempt to make the whole project more organized
+* **roboBuoy_modules** contains some files, which each contain the code to 'operate' one of roboBuoy's components. The code is splitted out into several files in an attempt to make the whole project more organized. The file **__init__.py** is meant to be empty and only tells python that this folder is a 'module' which can be 'imported' by other python code files.
 * the **templates** directory contains html templates to be rendered by the python webserver
   * **index.html** defines the basic layout of the main control page viewed on the tablet. It also loads and runs the 'roboBuoy.js' file on the client
 * the **static** directory contains javascript and css files 
