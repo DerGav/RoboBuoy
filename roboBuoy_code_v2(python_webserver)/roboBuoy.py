@@ -1,36 +1,41 @@
-# this is the main roboBuoy code file which should be run on startup
-# it manages the two threads and uses all the other code files
-
-import threading # this allows us to create and run threads
+'''
+	this is the main roboBuoy code file which should be run on startup
+	it manages the two threads and uses all the other code files
+'''
+# import module which allows us to create and run threads
+import threading
 # import our webserver file so we can run the server from here
-import roboBuoy_webserver
-from roboBuoy_control import RoboBuoy
+from roboBuoy_webserver import create_app
+# import our RoboBuoy control class
+from roboBuoy_control   import RoboBuoy
 
-# get the Flask app from our webserver file and store it in a variable
-app = roboBuoy_webserver.app
-
+# create an instance of our RoboBuoy class
 roboBuoy = RoboBuoy()
+
+# create flask app and pass the RoboBuoy instance
+app = create_app(roboBuoy)
 
 # this function simply runs the server
 def runServer():
-    # run the flask webapp we initialized at the top
-    #  "debug=True" :
-    #       run in debug mode (a bit slower, but easier to troubleshoot)
-    #  "use_reloader=False" :
-    #       diasble reloader so the server can run in a thread
-    #       means that script has to be restarted for changes to take effect
-    #  "host='0.0.0.0'" :
-    #       runs the server on the pi's IP-Adress and so makes it
-    #       available to anyone in the same network
-    app.run(debug=True, use_reloader=False, host='0.0.0.0')
-    # app.run(debug=True)
-    # app.run(debug=False, host='0.0.0.0')
+	# run the flask webapp we initialized at the top
+	#  "debug=True" :
+	#       run in debug mode (a bit slower, but easier to troubleshoot)
+	#  "use_reloader=False" :
+	#       diasble reloader so the server can run in a thread
+	#       means that script has to be restarted for changes to take effect
+	#  "host='0.0.0.0'" :
+	#       runs the server on the pi's IP-Adress and so makes it
+	#       available to anyone in the same network
+	app.run(debug=True, use_reloader=False, host='0.0.0.0')
+	# app.run(debug=True)
+	# app.run(debug=False, host='0.0.0.0')
 
 # this function should contain roboBuoy control code in future
 def roboBuoyControl():
 
-    while True:
-       print('doing stuff...')
+	# infinite loop as a placeholder for the roboBuoy code
+	while True:
+	   pass
 
 
 # create array to hold threads
