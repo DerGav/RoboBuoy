@@ -42,21 +42,24 @@ def index():
 #define what to do for request to '/some_value'
 @control.route('/some_value')
 def add_numbers():
-	# we need to add this line so we can use the global variable i in this function
-	# python would otherwise create a new local variable with the same name
-	global i
-	# create 'dictionary' and fill it with data pairs (key and value)
-	# filled with bogus values right now for testing
-	# eventually should be filled with data from RoboBuoy
-	data = {
-				'2. someValue1': i,
-				'1. someValue2': '&#8594; East', # '&#8594;' = code for arrow
-				'3. xand another one': 300
+	# # we need to add this line so we can use the global variable i in this function
+	# # python would otherwise create a new local variable with the same name
+	# global i
+	# # create 'dictionary' and fill it with data pairs (key and value)
+	# # filled with bogus values right now for testing
+	# # eventually should be filled with data from RoboBuoy
+	# data = {
+	# 			'2. someValue1': i,
+	# 			'1. someValue2': '&#8594; East', # '&#8594;' = code for arrow
+	# 			'3. xand another one': 300
+	#
+	# 		}
+	#
+	# # increment the global(!) variable i to simulate a changing value for testing
+	# i += 1;
 
-			}
-
-	# increment the global(!) variable i to simulate a changing value for testing
-	i += 1;
+	# request data from RoboBuoy class
+	data = current_app.config['ROBOBUOY'].getData();
 
 	# This line sends the data to whoever requested it, most likely some browser.
 	# Because browsers generally don't speak python the function 'jsonify'
@@ -79,7 +82,7 @@ def receiveCommand():
 	# to access it use the config attribute of the flask app that is using this
 	# blueprint and that has called this function
 	current_app.config['ROBOBUOY'].handleCommand(received_data)
-	
+
 	# send a message to the browser saying that everything went ok
 	# TODO: maybe some sort of validation of the data should be added here
 	return jsonify({'status':'OK'})

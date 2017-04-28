@@ -32,7 +32,6 @@ def runServer():
 
 # this function should contain roboBuoy control code in future
 def roboBuoyControl():
-
 	# infinite loop as a placeholder for the roboBuoy code
 	while True:
 	   pass
@@ -57,15 +56,15 @@ if __name__ == '__main__':
 
 	# connect the server function to a thread
 	t = threading.Thread(target=runServer)
-
 	# make this thread a 'daemon'
 	# this essentially means that it will be automatically stopped once the
-	# main roboBuoy thread is exited
-	# NOTE: this may not be desirable in production, but is useful during
+	# main thread is exited
+	# the main thread here is essentially this main function which doesn't do
+	# anything apart from starting the other threads
+	# NOTE: this setup may not be desirable in production, but is useful during
 	# development, as it allows the whole program to be started and stopped from
 	# the terminal
 	t.setDaemon(True)
-
 	# append thread to the array
 	threads.append(t)
 	# and start it
@@ -73,10 +72,26 @@ if __name__ == '__main__':
 
 	# connect the roboBuoy function to a thread
 	t = threading.Thread(target=roboBuoyControl)
+	# make this thread a 'daemon' too
+	t.setDaemon(True)
 	# append it to the array
 	threads.append(t)
 	# and start the thread
 	t.start()
+
+	# try the following code block and handle an exception if there is one...
+	try:
+		# Join all threads using a timeout so it doesn't block
+		# Filter out threads which have been joined or are None
+		# "joining" threads means that the executing thread (main thread), will
+		# wait for the specified other thread (t) to exit before resuming
+		threads = [t.join(1000) for t in threads if t is not None and t.isAlive()]
+	# handle a KeyboardInterrupt (Ctrl-C from the terminal)
+	except KeyboardInterrupt:
+		# print sth to show that this line is actually being executing
+		print "main Exit"
+
+
 
 	# Uncomment following code instead of the threads if you just want to
 	# run a single thread with the server. That may be easier for development.
