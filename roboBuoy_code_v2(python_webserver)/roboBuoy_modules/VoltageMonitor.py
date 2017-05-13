@@ -49,13 +49,13 @@ def CapacitorChargeTime (Pin):
   # Count loops until voltage across capacitor reads high on GPIO
   startT = time.time()
   try:
-    channel = GPIO.wait_for_edge(Pin, GPIO.RISING, timeout=maxWait)
-    if channel is None:
-      print('Timeout - dead battery or bad connection.')
-      return 1000.0
+	channel = GPIO.wait_for_edge(Pin, GPIO.RISING, timeout=maxWait)
+	if channel is None:
+	  print('Timeout - dead battery or bad connection.')
+	  return 1000.0
   except KeyboardInterrupt:
-    GPIO.cleanup()
-    return 0.0
+	GPIO.cleanup()
+	return 0.0
   endT = time.time()
   # Return elapsed time in milliseconds, as a float.
   delta = (endT-startT)*1000
@@ -64,43 +64,43 @@ def CapacitorChargeTime (Pin):
 def ToBrowser (msg1, msg2):
   buoy_info = open('/home/pi/data_from_buoy/battery.txt', 'w')
   if checkPi:
-    buoy_info.write('<td>Pi Battery</td> <td>' + repr(msg1) + ' </td> \n')
+	buoy_info.write('<td>Pi Battery</td> <td>' + repr(msg1) + ' </td> \n')
   else:
-    buoy_info.write('<td>Pi Battery</td> <td>Not monitored</td> \n')
+	buoy_info.write('<td>Pi Battery</td> <td>Not monitored</td> \n')
   buoy_info.write('<td>Motor Battery</td> <td>' + repr(msg2) + ' </td> \n')
   buoy_info.close()
 
 def ToRoboBuoy (msg1, msg2):
   buoy_info = open('/home/pi/data_to_buoy/battery.txt', 'w')
   if checkPi:
-    buoy_info.write(msg1 + '\n')
+	buoy_info.write(msg1 + '\n')
   else:
-    buoy_info.write("Pi not monitored\n");
+	buoy_info.write("Pi not monitored\n");
   buoy_info.write(msg2 + '\n')
   buoy_info.close()
 
 def median(list):
-    list = sorted(list)
-    if len(list) % 2 == 0:
-        return (list[(len(list)/2)-1] + list[len(list)/2])/2.0
-    elif len(list) % 2 != 0:
-        return list[int((len(list)/2))]
+	list = sorted(list)
+	if len(list) % 2 == 0:
+		return (list[(len(list)/2)-1] + list[len(list)/2])/2.0
+	elif len(list) % 2 != 0:
+		return list[int((len(list)/2))]
 
 
 def voltageCheck(pin, slope, intercept):
-    # Taking the median of 5 calls to CCT gives much more stable results.
-    chargeCount = median([CapacitorChargeTime(pin),
-                          CapacitorChargeTime(pin),
-                          CapacitorChargeTime(pin),
-                          CapacitorChargeTime(pin),
-                          CapacitorChargeTime(pin)])
-    voltage = slope * chargeCount + intercept
-    #if debug: print(repr(chargeCount) + "ms gives V = " + repr(voltage))
-    print(repr(chargeCount) + "ms gives V = " + repr(voltage))
-    return voltage
+	# Taking the median of 5 calls to CCT gives much more stable results.
+	chargeCount = median([CapacitorChargeTime(pin),
+						  CapacitorChargeTime(pin),
+						  CapacitorChargeTime(pin),
+						  CapacitorChargeTime(pin),
+						  CapacitorChargeTime(pin)])
+	voltage = slope * chargeCount + intercept
+	#if debug: print(repr(chargeCount) + "ms gives V = " + repr(voltage))
+	print(repr(chargeCount) + "ms gives V = " + repr(voltage))
+	return voltage
 
-if __name__ == '__main__':
-    print(CapacitorChargeTime(PiBatteryPin))
+# if __name__ == '__main__':
+#     print(CapacitorChargeTime(PiBatteryPin))
 
 #
 # #

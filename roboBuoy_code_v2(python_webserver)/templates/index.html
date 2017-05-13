@@ -12,11 +12,18 @@
 
 <!-- load JQUERY MOBILE framework---------------------------------------------->
 <!-- like a library, essentially a bunch of ready to use javascript and css,
-     to make the page look pretty --------------------------------------------->
-  <link rel="stylesheet"
-  href="{{ url_for('static', filename='jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css')}}"/>
+	 to make the page look pretty --------------------------------------------->
+
+	 <link rel="stylesheet"
+	 href="{{ url_for('static', filename='jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.css')}}"/>
+
+ <!-- <link rel="stylesheet"
+ href="{{ url_for('static', filename='jquery-mobile-theme-115719-0/themes/roboBuoy.min.css')}}"/> -->
+ <!-- <link rel="stylesheet"
+ href="{{ url_for('static', filename='jquery-mobile-theme-115719-0/themes/jquery.mobile.icons.min.css')}}"/> -->
+
   <script type="text/javascript" src="{{
-          url_for('static', filename='jquery-2.2.4.min.js') }}"></script>
+		  url_for('static', filename='jquery-2.2.4.min.js') }}"></script>
   <script type="text/javascript"
   src="{{ url_for('static', filename='jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js')}}">
   </script>
@@ -24,99 +31,194 @@
 <!-- link CUSTOM CSS file------------------------------------------------------>
 <!-- CSS definition: https://www.w3schools.com/css/ -->
   <link rel="stylesheet"
-        href="{{ url_for('static', filename='roboBuoy_styles.css') }}">
+		href="{{ url_for('static', filename='roboBuoy_styles.css') }}">
 
 <!-- tell browser where to ask for data from ---------------------------------->
   <script type="text/javascript">
-    /*
-    use following line if this html file is being served from the same
-    python script, from which we get the data (probably motor_contorl.py)
-    */
-    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	/*
+	use following line if this html file is being served from the same
+	python script, from which we get the data (probably motor_contorl.py)
+	*/
+	$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 
-    /*
-    Use the following commented line instead, if this file is being served from
-    elsewhere (e.g. Apache Webserver, like in the first version of RoboBuoy),
-    to set $SCRIPT_ROOT to the RoboBuoys IP address
-    */
-    //$SCRIPT_ROOT = 'http://192.168.43.1:5000'
+	/*
+	Use the following commented line instead, if this file is being served from
+	elsewhere (e.g. Apache Webserver, like in the first version of RoboBuoy),
+	to set $SCRIPT_ROOT to the RoboBuoys IP address
+	*/
+	//$SCRIPT_ROOT = 'http://192.168.43.1:5000'
   </script>
 
 <!-- link CUSTOM JS file ------------------------------------------------------>
 <!-- tell the browser to execute the code in 'roboBuoy.js' file --------------->
   <script type="text/javascript" src="{{
-          url_for('static', filename='roboBuoy.js') }}"></script>
+		  url_for('static', filename='roboBuoy.js') }}"></script>
 </head>
 <body>
 
 <div data-role="page" id="pageone">
+
   <div class="section" id="controls">
-    <div data-role="header">
-      <h1>Controls</h1>
-    </div>
-    <div data-role="main" class="ui-content">
-      <!-- <button class="ui-btn center-button">START</button>
-      <button class="ui-btn center-button">STOP</button> -->
-      <form id="switch">
-        <div id="flipswitchWrapper">
-          <select id="stopStart" data-role="flipswitch" name="startStopSwitch">
-              <option>Stopped</option>
-              <option>Running</option>
-          </select>
-        </div>
-      </form>
+	<div data-role="header">
+	  <h1>Controls</h1>
+	</div>
+	<div data-role="main" class="ui-content">
+	  <!-- <button class="ui-btn center-button">START</button>
+	  <button class="ui-btn center-button">STOP</button> -->
+	  <h2>Start Robo Buoy</h2>
+	  <form id="switch">
+		<div class="flipswitchWrapper">
+		  <select id="roboBuoy_stopStart" data-role="flipswitch" name="roboBuoy_startStopSwitch">
+			  <option>Stopped</option>
+			  <option>Running</option>
+		  </select>
+		</div>
+	  </form>
+	  <h2>Start Thrusters</h2>
+	  <form >
+		<div class="flipswitchWrapper">
+		  <select id="thrusters_stopStart" data-role="flipswitch" name="thrusters_startStopSwitch">
+			  <option>Stopped</option>
+			  <option>Started</option>
+		  </select>
+		</div>
+	  </form>
 
-      <form id="select_target_destination">
-        <div class="ui-field-contain">
-            <label for="targets">Choose Target Location:</label>
-            <select name="select-native-4" id="targets">
-                <option>Choose...</option>
-                <!-- The targets to choose from will be added here by the js -->
-            </select>
-        </div>
-      </form>
+	  <h2>Choose Target Location: </h2>
+	  <form id="select_target_destination">
+		<div class="ui-field-contain">
+		    <!-- <label for="targets">Choose Target Location:</label> -->
+		    <select name="select-native-4" id="targets">
+		        <option>Choose...</option>
+				<!-- The targets to choose from will be added here by the js -->
+		    </select>
+		</div>
+	  </form>
 
-      <a href="#editTargets"
-         class="ui-shadow ui-btn ui-corner-all ui-btn-inline"
-         data-transition="pop"> Edit Targets... </a>
+	  <a href="#editTargets"
+		 class="ui-shadow ui-btn ui-corner-all ui-btn-inline"
+		 data-transition="pop"> Edit Targets... </a>
 
-      <a href="#addTarget"
-            class="ui-shadow ui-btn ui-corner-all ui-btn-inline"
-            data-transition="pop" data-rel="dialog"> Add Targets... </a>
-    </div>
+	  <a href="#addTarget"
+			class="ui-shadow ui-btn ui-corner-all ui-btn-inline"
+			data-transition="pop" data-rel="dialog"> Add Targets... </a>
+	</div>
+
+	<br/>
+	<button id="shutdown" class="ui-btn center-button">SHUTDOWN ROBO BUOY</button>
+	<br/>
   </div>
-
   <div class="section"  id="data">
-    <div data-role="header">
-      <h1>Data</h1>
-    </div>
-    <div data-role="main" class="ui-content">
-      <table id="values"></table>
-    </div>
+	<div data-role="header">
+	  <h1>Data</h1>
+	</div>
+	<div data-role="main" class="ui-content">
+		<div> <h2> Device Status </h2> </div>
+
+		<div class="ui-grid-a">
+		  <div class="ui-block-a" style="border:1px solid black;">
+			  <div id="batter_txt">
+				  <b>Battery Status: </b>
+				  <span id="battery_voltage">14.6 V</span>
+			  </div>
+			  <div class="battery_div">
+				  <div id="battery" class="battery full"></div>
+			  </div>
+		  </div>
+		  <div class="ui-block-b" style="border:1px solid black;">
+			  <div>
+				  <b>Leak Detection: </b>
+				  <span id="leak_txt"> LEAK DETECTED</span>
+			  </div>
+			  <br/>
+			  <img class="img200x200" src="static/img/leak_detected.png" alt="">
+		  </div>
+		</div>
+		<!-- <table id="values"></table> -->
+		<div> <h2> Navigation Status </h2> </div>
+		<div class="ui-grid-a">
+		  <div class="ui-block-a" style="border:1px solid black;">
+			  <div >
+				  <b>Heading: </b>
+				  <span id="heading_txt">270°</span>
+			  </div>
+			  <canvas class="img200x200" id="compass" width="200" height="200"></canvas>
+			  <!-- <img src="static/img/compass.png" alt=""> -->
+			  <div >
+				 <b>Turn Direction: </b>
+				 <span id="turn_dir_txt">East</span>
+				 <br/>
+				 <img class="img200x200" id="turn_dir" src="static/img/arrow_right.png" alt="">
+			   </div>
+		  </div>
+		  <div class="ui-block-b" style="border:1px solid black;">
+				<div>
+					 <b>Speed: </b>
+					 <div id="speed_txt" class="big_txt">Fast</div>
+				 </div>
+				 <div class="lower_txt_right_row">
+					<b>Distance to Target: </b>
+					<div id="distance_txt" class="big_txt">400m</div>
+				 </div>
+		   </div>
+		</div>
+
+		<br/>
+		<div class="ui-grid-solo" style="border:1px solid black;">
+				<img class="gps_img" src="static/img/gps.png" alt="">
+			<div class="gps_coord">
+				<!-- <div class="gps_block">
+				   <b>Current Coordinates: </b>
+				   <span id="current_coord">400m</span>
+				</div>
+				<div class="gps_block">
+				  <b>Satelites Used: </b>
+				  <span id="sats_used">400m</span>
+				</div>
+				<div class="gps_block">
+				   <b>Target Coordinates: </b>
+				   <span id="target_coord">400m</span>
+				</div> -->
+				<table class="gps_data">
+					<tr>
+						<th>Target Coordinates</th>
+						<td id="targegt_coord">36" 121"</td>
+					</tr>
+					<tr>
+						<th>Current Coordinates</th>
+						<td id="current_coord">36" 121"</td>
+					</tr>
+					<tr>
+						<th>Satellites Used</th>
+						<td id="satellites_used">7 (error)</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+	</div>
   </div>
 </div>
-
-
 <!-- Edit Target Destinations Dialog ------------------------------------------>
 <!-- the following html defines the destination editing page ------------------>
 <!-- it only appears when the Edit button is clicked -->
 <div data-role="page" data-dialog="true" id="editTargets">
   <div data-role="header">
-    <h1>Edit Target Destinations</h1>
+	<h1>Edit Target Destinations</h1>
   </div>
 
   <div data-role="main" class="ui-content">
-    <!-- this 'collapsibleset' contains all groups which again contains target destinations, -->
-    <div data-role="collapsible-set" data-theme="a" data-content-theme="b"
-         id="edit_targets_list">
-      <!-- The target destinations will be added here by the javascript -->
-    </div>
+	<!-- this 'collapsibleset' contains all groups which again contains target destinations, -->
+	<div data-role="collapsible-set" data-theme="a" data-content-theme="b"
+		 id="edit_targets_list">
+	  <!-- The target destinations will be added here by the javascript -->
+	</div>
   </div>
 
   <!-- button for adding new groups -->
   <button class="ui-btn ui-btn-inline" id="createGroup">Create New Group</button>
   <div data-role="footer">
-    <h1>Footer Text In Dialog</h1>
+	<h1>Footer Text In Dialog</h1>
   </div>
 </div>
 
@@ -125,49 +227,49 @@
 <!-- it only appears when the Add Target button is clicked -->
 <div data-role="page" data-dialog="true" id="addTarget">
   <div data-role="header">
-    <h1>Add Target Destination</h1>
+	<h1>Add Target Destination</h1>
   </div>
 
   <div data-role="main" class="ui-content">
-    <form id="new_target_form">
-        <label for="location_name">location name</label>
-        <input type="text" name="location_name"
-               id="location_name" data-clear-btn="true">
+	<form id="new_target_form">
+		<label for="location_name">location name</label>
+		<input type="text" name="location_name"
+			   id="location_name" data-clear-btn="true">
 
-        <label for="location_lat">latitude</label>
-        <input type="number" step="any" name="location_lat"
-               id="location_lat" data-clear-btn="true">
+		<label for="location_lat">latitude</label>
+		<input type="number" step="any" name="location_lat"
+			   id="location_lat" data-clear-btn="true">
 
-        <label for="location_long">longitude</label>
-        <input type="number" step="any" name="location_long"
-               id="location_long" data-clear-btn="true">
-      <fieldset data-role="controlgroup">
-        <legend>Select Group:</legend>
-          <label for="existing_group">Add to existing group</label>
-          <input type="radio" name="new_or_existing_group"
-                 id="existing_group" value="existing_group" checked="checked">
+		<label for="location_long">longitude</label>
+		<input type="number" step="any" name="location_long"
+			   id="location_long" data-clear-btn="true">
+	  <fieldset data-role="controlgroup">
+		<legend>Select Group:</legend>
+		  <label for="existing_group">Add to existing group</label>
+		  <input type="radio" name="new_or_existing_group"
+				 id="existing_group" value="existing_group" checked="checked">
 
-              <select name="select_group" id="select_group">
-                <option>Choose Group...</option>
-              </select>
+			  <select name="select_group" id="select_group">
+				<option>Choose Group...</option>
+			  </select>
 
-          <label for="new_group">Create New</label>
-          <input type="radio" name="new_or_existing_group"
-                 id="new_group" value="new_group">
+		  <label for="new_group">Create New</label>
+		  <input type="radio" name="new_or_existing_group"
+				 id="new_group" value="new_group">
 
-          <label for="new_group_name">group name</label>
-          <input type="text" name="new_group_name"
-                 id="new_group_name" data-clear-btn="true">
-      </fieldset>
-    </form>
-    <a href="#pageone" data-rel="back "
-       class="ui-btn ui-btn-inline" id="save_new_target"> Save </button>
-    <a href="#pageone" data-rel="back "class="ui-btn ui-btn-inline"
-       id="cancel_add_target"> Cancel </a>
+		  <label for="new_group_name">group name</label>
+		  <input type="text" name="new_group_name"
+				 id="new_group_name" data-clear-btn="true">
+	  </fieldset>
+	</form>
+	<a href="#pageone" data-rel="back "
+	   class="ui-btn ui-btn-inline" id="save_new_target"> Save </a>
+	<a href="#pageone" data-rel="back "class="ui-btn ui-btn-inline"
+	   id="cancel_add_target"> Cancel </a>
   </div>
 
   <div data-role="footer">
-    <h1>Footer Text In Dialog</h1>
+	<h1>Footer Text In Dialog</h1>
   </div>
 </div>
 

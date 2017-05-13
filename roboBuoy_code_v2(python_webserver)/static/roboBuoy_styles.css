@@ -1,19 +1,33 @@
-table {
-    /*border-collapse: collapse;*/
-    width: 100%;
+
+
+
+
+/*.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper {
+
+	background-color: black;
+	border-color: dark yellow;
+	color: yellow;
+	text-shadow: 0 1px 0 black;
 }
+*/
+
+
+
+/*table {
+	width: 100%;
+}*/
 
 th, td {
-    text-align: left;
-    padding: 8px;
+	text-align: left;
+	padding: 0px 1px;
 }
-
+/*
 tr:nth-child(even){background-color: lightgrey}
 
 th {
-    background-color: lightblue;
-    color: white;
-}
+	background-color: lightblue;
+	color: white;
+}*/
 
 select[data-role="flipswitch"]
 {
@@ -30,29 +44,128 @@ select[data-role="flipswitch"]
   border-radius: 5px;
 }
 
+.big_txt
+{
+	font-size: 5em;
+	margin-top: 45px;
+	margin-bottom: 0px;
+	margin-left: 20%;
+	font-family: Helvetica;
+	font-weight: 800;
+}
+
+.img200x200
+{
+	/*margin-left:30%;*/
+	margin-left: 15%;
+}
+
+
+
+.lower_txt_right_row
+{
+	margin-top: 55px;
+	padding-bottom: 57px;
+}
+
+.gps_img
+{
+	display: inline-block;
+	width: 150px;
+	margin: 5px;
+	margin-top: 8px;
+	/*padding: 3px;*/
+	border: 1px solid grey;
+	border-radius: 10px;
+}
+.gps_coord
+{
+	display: inline-block;
+	vertical-align: top;
+	/*height:100%;
+	width:85%;
+	max-height: 152px;*/
+
+	font-size: 1.9em;
+}
+.gps_data
+{
+	margin-top:20px;
+}
+
 /*- make FLIPSWITCH big ------------------------------------------------------*/
-#flipswitchWrapper .ui-flipswitch {
+.flipswitchWrapper .ui-flipswitch {
 
-    width:400px;
-    height:100px;
-    line-height: 100px;
+	width:400px;
+	height:100px;
+	line-height: 100px;
 }
-#flipswitchWrapper .ui-flipswitch-active {
-    padding-left:0px;
+.flipswitchWrapper .ui-flipswitch-active {
+	padding-left:0px;
 }
-#flipswitchWrapper .ui-flipswitch .ui-flipswitch-on,
-#flipswitchWrapper .ui-flipswitch.ui-flipswitch-active .ui-flipswitch-on {
-    width:98px;
-    height:98px;
-    text-indent: -20em;
+.flipswitchWrapper .ui-flipswitch .ui-flipswitch-on,
+.flipswitchWrapper .ui-flipswitch.ui-flipswitch-active .ui-flipswitch-on {
+	width:98px;
+	height:98px;
+	text-indent: -20em;
 }
-#flipswitchWrapper .ui-flipswitch.ui-flipswitch-active .ui-flipswitch-on {
-    padding-top:0px;
-    margin-left:300px;
-    text-indent: -18em;
-    line-height: inherit;
+.flipswitchWrapper .ui-flipswitch.ui-flipswitch-active .ui-flipswitch-on {
+	padding-top:0px;
+	margin-left:300px;
+	text-indent: -18em;
+	line-height: inherit;
 }
 
-#flipswitchWrapper .ui-flipswitch-off {
-    line-height: inherit;
+.flipswitchWrapper .ui-flipswitch-off {
+	line-height: inherit;
 }
+
+#shutdown{
+	background-color: red;
+}
+
+/*- Battery  ------------------------------------------------------*/
+.battery_div
+{
+	margin-left:19%;
+	margin-top: 80px;
+}
+.battery {
+	position: relative;
+	display: block;
+	margin-left: 5px;
+	margin-bottom: 76px;
+	background: #00ff00;
+	width: 50px;
+	height: 69px;
+	float: left;
+}
+
+.battery:before {
+	content: "";
+	display: block;
+	background: transparent;
+	border: 6px solid black;
+	margin: -12px;
+	width: 170px;
+	height: 80px;
+	position: absolute;
+	border-radius: 2px;
+}
+
+.battery:after {
+	content: "";
+	display: block;
+	background: transparent;
+	border: 6px solid black;
+	margin: 0px 165px;
+	margin-top: 12px;
+	width: 6px;
+	height: 32px;
+	position: absolute;
+	border-radius: 2px;
+}
+
+.battery.empty {width: 0;}
+.battery.half {width: 90px;}
+.battery.full {width: 160px;}

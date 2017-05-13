@@ -27,14 +27,17 @@ def runServer():
 	#       runs the server on the pi's IP-Adress and so makes it
 	#       available to anyone in the same network
 	app.run(debug=True, use_reloader=False, host='0.0.0.0')
+	#app.run(debug=True, use_reloader=False)
 	# app.run(debug=True)
 	# app.run(debug=False, host='0.0.0.0')
 
 # this function should contain roboBuoy control code in future
 def roboBuoyControl():
-	# infinite loop as a placeholder for the roboBuoy code
-	while True:
-	   pass
+	roboBuoy.startup()
+	roboBuoy.setup()
+	roboBuoy.start()
+	print("roboBuoy exited")
+
 
 
 # create array to hold threads
