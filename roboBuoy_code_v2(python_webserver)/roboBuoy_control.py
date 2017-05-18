@@ -159,6 +159,16 @@ class RoboBuoy(object):
 		# for now just print the command
 		print(message['command'])
 
+		if  message['command'] == "start_stop_roboBuoy":
+			pass
+		elif message['command'] == "start_stop_thrusters":
+			pass
+		elif message['command'] == "shutdown":
+			pass
+		elif message['command'] == "set_new_target":
+			pass
+		elif message['command'] == "save_targets":
+			pass
 
 
 	def getData(self):

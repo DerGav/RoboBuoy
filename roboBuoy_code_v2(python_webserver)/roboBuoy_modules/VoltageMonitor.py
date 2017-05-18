@@ -9,8 +9,10 @@ debug = True
 
 # At the top where other I/O pins are defined:
 # Motor uses 18 and 17.
-PiBatteryPin = 22
-MotorBatteryPin = 23
+# PiBatteryPin = 22
+# MotorBatteryPin = 23
+
+batteryPin = 22
 
 # Calibration
 piSlope = -11.399
@@ -18,11 +20,13 @@ piIntercept = 21.52
 motorSlope = -11.399
 motorIntercept = 21.52
 
+slope = -11.399
+intercept = 21.52
+
 # Limit levels
-motorBatLow = 14.2
-motorBatDanger = 14.0
-piBatLow = 7.2
-piBatDanger = 7.0
+batLow = 14.2
+batDanger = 14.0
+
 
 # Maximum time to wait for a dead or disconnected battery
 maxWait = 1000
@@ -99,6 +103,8 @@ def voltageCheck(pin, slope, intercept):
 	print(repr(chargeCount) + "ms gives V = " + repr(voltage))
 	return voltage
 
+def check_roboBuoy_voltage():
+	return voltageCheck(22, slope, intercept)
 # if __name__ == '__main__':
 #     print(CapacitorChargeTime(PiBatteryPin))
 

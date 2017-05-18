@@ -7,7 +7,7 @@ from flask import current_app, Blueprint, Flask,render_template,jsonify, request
 
 # import our target destination management file to get the destinations
 # 'as' keyword allows us to give it a shorter (arbitrary) name
-import roboBuoy_targetDestination_management as targets
+from roboBuoy_modules import roboBuoy_targetDestination_management as targets
 
 # define a flask blueprint (a blueprint for a webserver app) and call it control
 # also tell it where to find the templates and static directories
@@ -98,4 +98,5 @@ def show_received():
 
 @control.route('/send_targetDestinations')
 def send_targetDestinations():
-	return jsonify(targets.get_target_destinations())
+	#return jsonify(targets.get_target_destinations())
+	return jsonify(targets.load_target_destinations())
