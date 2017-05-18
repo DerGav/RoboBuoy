@@ -77,19 +77,19 @@ def setup():
    PWM.add_channel_pulse(dma, turn_thruster_pin, start, TURN_OFF)
    time.sleep(1)
 
-  # Any code which should run when shutting down the program goes here.
-  # TODO: have this be called whenever the program stops, such as from control-C.
-  def motorStop():
-	  logger.warn("Stopping motor control!")
-	  # Not sure if this matters, but it seems safer to explicitly tell the
-	  # thrusters to stop before shutting down the control system.
-	  PWM.add_channel_pulse(dma, forward_thruster_pin, start, THRUST_OFF)
-	  PWM.add_channel_pulse(dma, turn_thruster_pin, start, TURN_OFF)
-	  servo.stop_servo(forward_thruster_pin)
-	  servo.stop_servo(turn_thruster_pin)
-	  PWM.clear_channel_gpio(0, forward_thruster_pin)
-	  PWM.clear_channel_gpio(0, turn_thruster_pin)
-	  PWM.cleanup()
+# Any code which should run when shutting down the program goes here.
+# TODO: have this be called whenever the program stops, such as from control-C.
+def motorStop():
+  logger.warn("Stopping motor control!")
+  # Not sure if this matters, but it seems safer to explicitly tell the
+  # thrusters to stop before shutting down the control system.
+  PWM.add_channel_pulse(dma, forward_thruster_pin, start, THRUST_OFF)
+  PWM.add_channel_pulse(dma, turn_thruster_pin, start, TURN_OFF)
+  servo.stop_servo(forward_thruster_pin)
+  servo.stop_servo(turn_thruster_pin)
+  PWM.clear_channel_gpio(0, forward_thruster_pin)
+  PWM.clear_channel_gpio(0, turn_thruster_pin)
+  PWM.cleanup()
 
 def calculateTurnAngle():
 	# first, a little logic so we are less likely to oscillate between hard-left and hard-right

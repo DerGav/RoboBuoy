@@ -29,22 +29,18 @@ $(document).ready(function () {
 			  // and execute this function when data arrives
 			  function(data) // data is now the response from the server
 			  {
-				// console.log(data)
-				$('#values').empty(); // remove the data from previous call
+				$('#current_lat').html(data.current_lat);
+				$('#current_long').html(data.current_long);
+				$('#satellites_used').html(data.satellites_used);
+				$('#target_lat').html(data.target_lat);
+				$('#target_long').html(data.target_long);
+				$('#distance_to_target').html(data.distance_to_target);
+				$('#speed').html(data.speed);
 
-				/*
-				 * loop through all data pairs and add them to the table
-				 * with id 'values' in index.html
-				 */
-				for( var key in data)
-				{  //create new row in table
-				//   $('<tr></tr>').append($('<th></th>').html(key))
-				// 				.append($('<td></td>').html(data[key]))
-				// 				.appendTo('#values'); //add row to table
-				}
-
-				update_battery_display(16.8);
-
+				update_compass(data.mag_heading);
+				update_turn_direction(data.turn_direction);
+				update_leak(data.leak);
+				update_battery_display(data.battery_voltage);
 			  });
   },250); // interval in milliseconds after which to get new data from roboBuoy
 
@@ -469,7 +465,7 @@ function update_battery_display(battery_voltage)
 	var color      = "hsl(" + color_hue + ",100%,50%)";
 
 	var size = percentage * 1.6;
-
+	console.log(size);
 	$('#battery').css('background-color', color)
 				 .css('width',size);
 }
@@ -482,6 +478,12 @@ var img = null,
 	needle = null,
 	ctx = null,
 	degrees = 270;
+
+function update_compass(mag_heading)
+{
+	degrees = mag_heading;
+	$('#mag_heading_txt').html(mag_heading);
+}
 
 function clearCanvas() {
 	 // clear canvas
@@ -540,5 +542,34 @@ function init_compass() {
 		console.log("ctx",ctx,'Img',img,'needle',needle,'deg',degrees);
 	} else {
 		alert("Canvas not supported!");
+	}
+}
+
+//turn direction displays
+function update_turn_direction(turn_direction)
+{
+	if(turn_direction == 'left')
+	{
+		$('#turn_dir').attr('src','static/img/arrow_left.png');
+		$('#turn_dir_txt').html('left');
+	}
+	if(turn_direction == 'right')
+	{
+		$('#turn_dir').attr('src','static/img/arrow_right.png');
+		$('#turn_dir_txt').html('right');
+	}
+}
+
+//leak displays
+function update_leak(leak)
+{
+	if(leak)
+	{
+		$('#leak_txt').html('LEAK DETECTED');
+		$('#leak').attr('src','static/img/leak_detected.png');
+	}
+	else {
+		$('#leak_txt').html('No Leaks');
+		$('#leak').attr('src','static/img/leak_grayed.png');
 	}
 }

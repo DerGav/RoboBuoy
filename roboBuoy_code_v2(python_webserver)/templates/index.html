@@ -128,10 +128,10 @@
 		  <div class="ui-block-b" style="border:1px solid black;">
 			  <div>
 				  <b>Leak Detection: </b>
-				  <span id="leak_txt"> LEAK DETECTED</span>
+				  <span id="leak_txt"></span>
 			  </div>
 			  <br/>
-			  <img class="img200x200" src="static/img/leak_detected.png" alt="">
+			  <img id='leak' class="img200x200" src="static/img/leak_detected.png" alt="">
 		  </div>
 		</div>
 		<!-- <table id="values"></table> -->
@@ -140,7 +140,8 @@
 		  <div class="ui-block-a" style="border:1px solid black;">
 			  <div >
 				  <b>Heading: </b>
-				  <span id="heading_txt">270°</span>
+				  <span id="mag_heading_txt">270</span>
+				  <span>°</span>
 			  </div>
 			  <canvas class="img200x200" id="compass" width="200" height="200"></canvas>
 			  <!-- <img src="static/img/compass.png" alt=""> -->
@@ -154,11 +155,14 @@
 		  <div class="ui-block-b" style="border:1px solid black;">
 				<div>
 					 <b>Speed: </b>
-					 <div id="speed_txt" class="big_txt">Fast</div>
+					 <div id="speed" class="big_txt"></div>
 				 </div>
 				 <div class="lower_txt_right_row">
 					<b>Distance to Target: </b>
-					<div id="distance_txt" class="big_txt">400m</div>
+					<div id="distance_txt" class="big_txt">
+						<span id="distance_to_target"></span>
+						<span>m</span>
+					</div>
 				 </div>
 		   </div>
 		</div>
@@ -182,15 +186,21 @@
 				<table class="gps_data">
 					<tr>
 						<th>Target Coordinates</th>
-						<td id="targegt_coord">36" 121"</td>
+						<td id="targegt_coord">
+							<span id="target_lat"></span>
+							<span id="target_long"></span>
+						</td>
 					</tr>
 					<tr>
 						<th>Current Coordinates</th>
-						<td id="current_coord">36" 121"</td>
+						<td id="current_coord">
+							<span id="current_lat"></span>
+							<span id="current_long"></span>
+					</td>
 					</tr>
 					<tr>
 						<th>Satellites Used</th>
-						<td id="satellites_used">7 (error)</td>
+						<td id="satellites_used"></td>
 					</tr>
 				</table>
 			</div>
