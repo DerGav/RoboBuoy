@@ -1,5 +1,5 @@
 import Adafruit_LSM303
-
+import math
 # Magnetometer corrections
 # 13.3 is a good declination for Marina, CA in 2016.  Change when traveling.
 declination = 13.3

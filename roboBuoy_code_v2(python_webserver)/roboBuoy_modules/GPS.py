@@ -1,7 +1,7 @@
 import threading
 
 # import gps library somehow
-# from gps import *
+from gps import *
 
 class GpsController(threading.Thread):
 	def __init__(self):
@@ -43,16 +43,16 @@ class GpsController(threading.Thread):
 		return count
 
 def setupGPS():
-    gpsc = GpsController()
-    gpsc.start()
-    logger.info("GPS controller started.")
+	gpsc = GpsController()
+	gpsc.start()
+	logger.info("GPS controller started.")
 
 def read():
 	current_lat = gpsc.fix.latitude
 	current_long = gpsc.fix.longitude
 	sats_used = str(gpsc.satellitesUsed)
 
-    # if logNow:
+	# if logNow:
 	# 	logger.debug("Long error (m): " + str(gpsc.fix.epx))
 	# 	logger.debug("Lat  error (m): " + str(gpsc.fix.epy))
 	# 	recentEpxy = math.sqrt(gpsc.fix.epx*gpsc.fix.epx + gpsc.fix.epy*gpsc.fix.epy)
@@ -70,7 +70,7 @@ def getDistanceToTarget():
 		logger.info("Distance to target = " + str(distance_to_target))
 
 def getDegreesBearingToTarget():
-    # Bearing - 0 deg = N, 90 deg = E, 180 = S, 270 = W
+	# Bearing - 0 deg = N, 90 deg = E, 180 = S, 270 = W
 
 	# Thinking out loud for the inputs to atan2:
 	# deltaLatToTar is positive if we are south of the target.
@@ -87,13 +87,13 @@ def getDegreesBearingToTarget():
 	turn_angle = degrees_bearing - mag_heading
 	# In case we end up outside the range of +/- 180 degrees:
 	while (turn_angle > 180.0):
-            turn_angle = turn_angle - 360.0
+			turn_angle = turn_angle - 360.0
 	while (turn_angle < -180.0):
-            turn_angle = turn_angle + 360.0
+			turn_angle = turn_angle + 360.0
 
 	if logNow:
 		logger.info("degrees bearing to target " + str(round(degrees_bearing, 1)))
 		logger.info("magnetic heading " + str(round(mag_heading, 0)))
 		logger.info("degrees to turn " + str(round(turn_angle, 0)))
 		logger.info("distance to target " + str(round(distance_to_target, 1)))
-        time.sleep(MAIN_LOOP_DELAY)
+		time.sleep(MAIN_LOOP_DELAY)

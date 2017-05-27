@@ -1,5 +1,5 @@
 # First two lines may already exist if this is merged into the main controller:
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 
 
@@ -10,7 +10,7 @@ class VoltageMonitor:
 		self.intercept = 21.52
 		self.batLow = 14.2
 		self.batDanger = 14.0
-	def read_voltage():
+	def read_voltage(self):
 		return voltageCheck(self.batteryPin,self.slope,self.intercept)
 
 checkPi = False

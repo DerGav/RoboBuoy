@@ -29,6 +29,8 @@ $(document).ready(function () {
 			  // and execute this function when data arrives
 			  function(data) // data is now the response from the server
 			  {
+				console.log("data",data);  
+
 				$('#current_lat').html(data.current_lat);
 				$('#current_long').html(data.current_long);
 				$('#satellites_used').html(data.satellites_used);

@@ -6,7 +6,10 @@ def setup():
 def checkForLeak():
 	leak_input = RPIO.input(4)
 
-	return Not leak_input
+	if(leak_input):
+			return False
+	else:
+			return True
 	#if leak_input == False:
 		#shuts down the thrusters and sends leak alert to contol pad
 		#leak_alert = open('/home/pi/data_from_buoy/leak.txt', 'w')

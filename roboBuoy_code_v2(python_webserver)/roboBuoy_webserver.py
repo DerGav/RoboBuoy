@@ -31,6 +31,9 @@ def create_app(roboBuoy_instance):
 i = 0
 received_data = []
 
+################################################################################
+# serve control webpage
+################################################################################
 # for a request to the root directory of our webpage call the index() function
 @control.route('/')
 # define a function (fka Subroutine) called index
@@ -39,6 +42,9 @@ def index():
 	# real html and return it to the browser that requested it
 	return render_template('index.html')
 
+################################################################################
+# implement AJAX API from which browser can get data
+################################################################################
 #define what to do for request to '/some_value'
 @control.route('/some_value')
 def add_numbers():
@@ -67,6 +73,24 @@ def add_numbers():
 	# JavaScriptObjectNotation(JSON) so that it can be processed by a browser.
 	return jsonify(data)
 
+@control.route('/send_targetDestinations')
+def send_targetDestinations():
+	#return jsonify(targets.get_target_destinations())
+	return jsonify(targets.load_target_destinations())
+
+# this route is just there for development purposes right now
+# it simply sends the data the server received back to the browser Because
+# it is easier to view it there
+@control.route('/show_received')
+def show_received():
+	# specify that received_data refers to global variable received_data
+	global received_data
+	return jsonify(received_data)
+
+################################################################################
+# implement AJAX API to which browser can post commands
+################################################################################
+
 # this route doesn't serve a page or data but instead
 # receives data from the browser, hence methods=['POST']
 @control.route('/receive_command', methods=['POST'])
@@ -86,17 +110,3 @@ def receiveCommand():
 	# send a message to the browser saying that everything went ok
 	# TODO: maybe some sort of validation of the data should be added here
 	return jsonify({'status':'OK'})
-
-# this route is just there for development purposes right now
-# it simply sends the data the server received back to the browser Because
-# it is easier to view it there
-@control.route('/show_received')
-def show_received():
-	# specify that received_data refers to global variable received_data
-	global received_data
-	return jsonify(received_data)
-
-@control.route('/send_targetDestinations')
-def send_targetDestinations():
-	#return jsonify(targets.get_target_destinations())
-	return jsonify(targets.load_target_destinations())
