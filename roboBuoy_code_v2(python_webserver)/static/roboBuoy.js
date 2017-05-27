@@ -29,7 +29,7 @@ $(document).ready(function () {
 			  // and execute this function when data arrives
 			  function(data) // data is now the response from the server
 			  {
-				console.log("data",data);  
+				console.log("data",data);
 
 				$('#current_lat').html(data.current_lat);
 				$('#current_long').html(data.current_long);
@@ -203,10 +203,7 @@ function sendCommandToRoboBuoy(command, values)
 {
   $.ajax({
 			url: $SCRIPT_ROOT + '/receive_command',
-
-			//$('#switch') gets 'form' element which contains the on/off switch
-			//the serialize functions translates it so python can understand it
-			//data: $('#switch').serialize(),
+			//data object to send
 			data: {
 				'command': command,
 				'values': values
@@ -458,16 +455,18 @@ function updateTargets()
 
 function update_battery_display(battery_voltage)
 {
+	//define constants - adapt to batteries being used
 	var fully_charged = 16.8;
 	var low_voltage   = 14.0;
-
+	//calculate battery percentage
 	var percentage = (battery_voltage - low_voltage)/(fully_charged - low_voltage) *100;
-
+	//interpolate between colors
 	var color_hue  = (percentage * 1.2).toString();
 	var color      = "hsl(" + color_hue + ",100%,50%)";
-
+	//determine width of battery charge bar corresponidng to percantage
 	var size = percentage * 1.6;
-	console.log(size);
+	//console.log(size);
+	//apply the changes
 	$('#battery').css('background-color', color)
 				 .css('width',size);
 }
@@ -483,7 +482,10 @@ var img = null,
 
 function update_compass(mag_heading)
 {
+	//update global degrees variable which is used by the compass functions
+	// to position the needle
 	degrees = mag_heading;
+	//add text to page
 	$('#mag_heading_txt').html(mag_heading);
 }
 
@@ -550,6 +552,7 @@ function init_compass() {
 //turn direction displays
 function update_turn_direction(turn_direction)
 {
+	//toggle between image of arrow poining left and right depending on input
 	if(turn_direction == 'left')
 	{
 		$('#turn_dir').attr('src','static/img/arrow_left.png');
@@ -565,6 +568,7 @@ function update_turn_direction(turn_direction)
 //leak displays
 function update_leak(leak)
 {
+	//toggle between images to signify leak or no leak depending on input
 	if(leak)
 	{
 		$('#leak_txt').html('LEAK DETECTED');

@@ -66,6 +66,8 @@ def save_target_destinations(targt_destinations):
 		return "success"
 	else:
 		return "error"
+
+# add main to test functions        
 if __name__ == '__main__':
 	global target_destinations
 	save_target_destinations(target_destinations)
