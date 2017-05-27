@@ -21,6 +21,7 @@ This is a work in progress attempt of redesigning and simplifying the code.
 * the **static** directory contains javascript and css files 
   * **roboBuoy.js** is the main javascript file for the control page (index.html) it handles the communication between the control page and the python webserver. It also defines all the user interactions, e.g. what happens when a button is clicked etc.
   * **roboBuoy_styles.css** changes the apperance of the control page
+  * **img** directory contains all the images used in the webpage (e.g. the compass)
   * the jQuery files are libraries containing prewritten javascript and css to make the page look nice
   
 ## Installation
