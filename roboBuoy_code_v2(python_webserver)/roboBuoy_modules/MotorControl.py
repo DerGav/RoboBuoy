@@ -1,3 +1,11 @@
+'''
+Motor Control module
+
+first run "setup()"
+then run "thrust_strong()","thrust_soft()", "thrust_stop()" to control
+forward thruster or "turn_right()", "turn_leftt()", "turn_stop()" to control
+turn thruster
+'''
 from RPIO import PWM
 import RPi.GPIO as GPIO
 import time

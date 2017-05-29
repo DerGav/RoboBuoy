@@ -1,3 +1,8 @@
+'''
+GPS module
+
+for testing run "setupGPS" first and then "read()"
+'''
 import threading
 
 # import gps library somehow

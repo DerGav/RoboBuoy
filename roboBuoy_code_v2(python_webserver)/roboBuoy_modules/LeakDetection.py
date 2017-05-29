@@ -1,3 +1,8 @@
+'''
+Leak Detection module
+
+run "setup()" and then "checkForLeak()"
+'''
 import RPIO
 
 def setup():

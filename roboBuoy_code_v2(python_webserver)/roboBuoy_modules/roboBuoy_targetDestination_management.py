@@ -1,5 +1,7 @@
-# this file contains python code to manage roboBuoy's target destinations
-
+'''
+Target Destination Management module
+this file contains python code to manage roboBuoy's target destinations
+'''
 import pickle
 
 # For now lets hardcode all possible targets in this list.
@@ -67,7 +69,7 @@ def save_target_destinations(targt_destinations):
 	else:
 		return "error"
 
-# add main to test functions        
+# add main to test functions
 if __name__ == '__main__':
 	global target_destinations
 	save_target_destinations(target_destinations)

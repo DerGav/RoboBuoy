@@ -1,3 +1,9 @@
+'''
+Voltage Monitor module
+
+run "check_roboBuoy_voltage() to get voltage in voltages
+
+'''
 # First two lines may already exist if this is merged into the main controller:
 import RPi.GPIO as GPIO
 import time
@@ -113,7 +119,7 @@ def voltageCheck(pin, slope, intercept):
 	return voltage
 
 def check_roboBuoy_voltage():
-	return voltageCheck(22, slope, intercept)
+	return voltageCheck(batteryPin, slope, intercept)
 # if __name__ == '__main__':
 #     print(CapacitorChargeTime(PiBatteryPin))
 

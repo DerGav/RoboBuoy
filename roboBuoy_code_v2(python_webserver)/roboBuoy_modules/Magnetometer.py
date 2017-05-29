@@ -1,3 +1,9 @@
+'''
+Magnetometer module
+
+run "read()" to get magnetic heading in degrees
+'''
+
 import Adafruit_LSM303
 import math
 # Magnetometer corrections
